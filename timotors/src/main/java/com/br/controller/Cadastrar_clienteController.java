@@ -5,16 +5,18 @@
  */
 package com.br.controller;
 
-import com.br.dao.ClienteDAO;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.br.dao.ClienteDAO;
+import com.br.model.Cliente;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.br.model.Cliente;
 
 /**
  * FXML Controller class

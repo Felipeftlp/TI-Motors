@@ -5,13 +5,16 @@
  */
 package com.br.controller;
 
-import com.br.dao.VeiculoDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.br.dao.VeiculoDAO;
+import com.br.model.Veiculo;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +33,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import com.br.model.Veiculo;
 
 /**
  * FXML Controller class
@@ -46,25 +48,25 @@ public class Tela_veiculoController implements Initializable {
     private TableView<Veiculo> TabelaVeiculo;
 
     @FXML
-    private TableColumn<?, ?> ColunaID;
+    private TableColumn<Veiculo, Integer> ColunaID;
 
     @FXML
-    private TableColumn<?, ?> ColunaMarca;
+    private TableColumn<Veiculo, String> ColunaMarca;
 
     @FXML
-    private TableColumn<?, ?> ColunaAno;
+    private TableColumn<Veiculo, Integer> ColunaAno;
 
     @FXML
-    private TableColumn<?, ?> ColunaModelo;
+    private TableColumn<Veiculo, String> ColunaModelo;
 
     @FXML
-    private TableColumn<?, ?> ColunaCor;
+    private TableColumn<Veiculo, String> ColunaCor;
 
     @FXML
-    private TableColumn<?, ?> ColunaEstado;
+    private TableColumn<Veiculo, String> ColunaEstado;
 
     @FXML
-    private TableColumn<?, ?> ColunaPreco;
+    private TableColumn<Veiculo, Double> ColunaPreco;
     
     @FXML
     private ImageView imagemEditar;
@@ -85,7 +87,7 @@ public class Tela_veiculoController implements Initializable {
 
         VeiculoDAO veicDao = new VeiculoDAO();
         ArrayList<Veiculo> veiculos = veicDao.buscarTodos();
-        System.out.println("˜˜carregando dados----" + veiculos.size());
+        System.out.println("carregando dados----" + veiculos.size());
 
         //comando para passar para javaFx
         ObservableList<Veiculo> itensveiculosFX = FXCollections.observableArrayList(veiculos);
@@ -96,7 +98,7 @@ public class Tela_veiculoController implements Initializable {
     @FXML
     private void addveiculo(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(Cadastro_veiculoController.class.getResource("/telas/Cadastro_veiculo.fxml"));
+        Parent root = FXMLLoader.load(Cadastro_veiculoController.class.getResource("/com/br/Cadastro_veiculo.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Cadastro de Veículo");
         stage.initModality(Modality.WINDOW_MODAL);
@@ -122,7 +124,7 @@ public class Tela_veiculoController implements Initializable {
                 erroAlert.showAndWait();
             } else {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/telas/Cadastro_veiculo.fxml"));
+                loader.setLocation(getClass().getResource("/com/br/Cadastro_veiculo.fxml"));
                 try {
                     loader.load();
                 } catch (IOException ex) {

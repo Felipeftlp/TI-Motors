@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="415.0" prefWidth="650.0" style="-fx-background-color: #788073;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Tela_funcionarioController">
+   <children>
+      <Button fx:id="btnaddfuncionario" layoutX="514.0" layoutY="329.0" mnemonicParsing="false" onAction="#addfuncionario" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #9ACC7A;" text="Cadastrar" wrapText="true">
+         <font>
+            <Font name="Eras Demi ITC" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label layoutX="34.0" layoutY="28.0" text="FUNCIONÁRIOS" textFill="WHITE">
+         <font>
+            <Font name="Eras Bold ITC" size="20.0" />
+         </font></Label>
+      <TableView fx:id="tabelaFuncionario" layoutX="34.0" layoutY="84.0" prefHeight="230.0" prefWidth="570.0">
+        <columns>
+          <TableColumn fx:id="colunaID" prefWidth="37.0" text="ID" />
+          <TableColumn fx:id="colunaNome" prefWidth="125.0" text="Nome" />
+            <TableColumn fx:id="colunaCPF" prefWidth="135.0" text="CPF" />
+            <TableColumn fx:id="colunaTelefone" prefWidth="137.0" text="Telefone" />
+            <TableColumn fx:id="colunaEmail" prefWidth="148.0" text="Email" />
+        </columns>
+      </TableView>
+      <Button layoutX="409.0" layoutY="329.0" mnemonicParsing="false" onAction="#carregarDadosTabela" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #F7F54F;" text="Atualizar">
+         <font>
+            <Font name="Eras Demi ITC" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <ImageView fx:id="imagemRemover" fitHeight="45.0" fitWidth="45.0" layoutX="100.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/lixeira-de-reciclagem.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
+      <ImageView fx:id="imagemEditar" fitHeight="45.0" fitWidth="45.0" layoutX="34.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/lapis.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
+      <Line endX="93.0" layoutX="135.0" layoutY="64.0" startX="-100.0" strokeWidth="2.0" />
+   </children>
+</AnchorPane>

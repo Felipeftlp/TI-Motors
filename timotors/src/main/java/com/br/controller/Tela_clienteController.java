@@ -94,7 +94,7 @@ public class Tela_clienteController implements Initializable {
     @FXML
     private void addcliente(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(Cadastrar_clienteController.class.getResource("/telas/Cadastrar_cliente.fxml"));
+        Parent root = FXMLLoader.load(Cadastrar_clienteController.class.getResource("/com/br/Cadastrar_cliente.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Cadastro de Clientes");
         stage.initModality(Modality.WINDOW_MODAL);
@@ -120,7 +120,7 @@ public class Tela_clienteController implements Initializable {
                 erroAlert.showAndWait();
             } else {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/telas/Cadastrar_cliente.fxml"));
+                loader.setLocation(getClass().getResource("/com/br/Cadastrar_cliente.fxml"));
                 try {
                     loader.load();
                 } catch (IOException ex) {

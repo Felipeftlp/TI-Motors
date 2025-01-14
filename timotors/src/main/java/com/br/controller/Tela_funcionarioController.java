@@ -5,13 +5,16 @@
  */
 package com.br.controller;
 
-import com.br.dao.FuncionarioDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.br.dao.FuncionarioDAO;
+import com.br.model.Funcionario;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +33,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import com.br.model.Funcionario;
 
 
 /**
@@ -70,7 +72,7 @@ public class Tela_funcionarioController implements Initializable {
     @FXML
     public void carregarDadosTabela() {
         tabelaFuncionario.getItems().clear();
-        colunaID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colunaID.setCellValueFactory(new PropertyValueFactory<>("id_funcionario"));
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
@@ -89,7 +91,7 @@ public class Tela_funcionarioController implements Initializable {
     @FXML
     private void addfuncionario(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(Cadastro_funcionarioController.class.getResource("/telas/Cadastro_funcionario.fxml"));
+        Parent root = FXMLLoader.load(Cadastro_funcionarioController.class.getResource("/com/br/Cadastro_funcionario.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Cadastro de Funcionário");
         stage.initModality(Modality.WINDOW_MODAL);
@@ -115,7 +117,7 @@ public class Tela_funcionarioController implements Initializable {
                 erroAlert.showAndWait();
             } else {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/telas/Cadastro_funcionario.fxml"));
+                loader.setLocation(getClass().getResource("/com/br/Cadastro_funcionario.fxml"));
                 try {
                     loader.load();
                 } catch (IOException ex) {

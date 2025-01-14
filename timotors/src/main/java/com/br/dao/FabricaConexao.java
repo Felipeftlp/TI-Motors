@@ -17,8 +17,8 @@ import java.sql.Statement;
  */
 public class FabricaConexao {
     private static final String USER = "root";
-    private static final String PASS = "12345";
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/femar";
+    private static final String PASS = "Bolino123#";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/tiMotors";
     
        public static Connection getConnection() {
             try {
