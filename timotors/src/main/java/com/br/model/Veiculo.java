@@ -17,12 +17,12 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private String preco;
-    private String estado;
+    private EstadoVeiculo estado;
 
     public Veiculo() {
     }
 
-    public Veiculo(String marca, String ano, String modelo, String cor, String preco, String estado) {
+    public Veiculo(String marca, String ano, String modelo, String cor, String preco, EstadoVeiculo estado) {
         this.marca = marca;
         this.ano = ano;
         this.modelo = modelo;
@@ -80,11 +80,25 @@ public class Veiculo {
     }
     
     
-    public String getEstado() {
+    public EstadoVeiculo getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoVeiculo estado) {
         this.estado = estado;
+    }
+
+    // Método toString
+    @Override
+    public String toString() {
+        return "Veiculo{" +
+                "id=" + id +
+                ", marca='" + marca + '\'' +
+                ", ano='" + ano + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", cor='" + cor + '\'' +
+                ", preco='" + preco + '\'' +
+                ", estado=" + estado +
+                '}';
     }
 }

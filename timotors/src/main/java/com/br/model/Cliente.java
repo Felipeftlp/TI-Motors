@@ -9,64 +9,22 @@ package com.br.model;
  *
  * @author felip
  */
-public class Cliente {
+public class Cliente extends Pessoa{
     
-    private int id_cliente;
-    private String nome;
-    private String cpf;
-    private String email;
-    private String telefone;
     private String interesse;
+    private String endereco;
+    private String historicoCompras;
 
     public Cliente() {
+        super();
     }
 
-    public Cliente(String nome, String cpf, String email, String telefone, String interesse) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
+    public Cliente(int id, String nome, String cpf, String telefone, String email, String interesse, 
+                   String endereco, String historicoCompras) {
+        super(id, nome, cpf, telefone, email);
         this.interesse = interesse;
-    }
-
-    public int getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
-    }
-    
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+        this.endereco = endereco;
+        this.historicoCompras = historicoCompras;
     }
 
     public String getInteresse() {
@@ -75,6 +33,31 @@ public class Cliente {
 
     public void setInteresse(String interesse) {
         this.interesse = interesse;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getHistoricoCompras() {
+        return historicoCompras;
+    }
+
+    public void setHistoricoCompras(String historicoCompras) {
+        this.historicoCompras = historicoCompras;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "interesse='" + interesse + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", historicoCompras='" + historicoCompras + '\'' +
+                "} " + super.toString();
     }
     
 }
