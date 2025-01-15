@@ -51,6 +51,7 @@ public class Cadastro_veiculoController implements Initializable {
     private int idVeiculo;
     
     @FXML
+    @SuppressWarnings("unused")
     private void cadastrarVeiculo(ActionEvent event){
         String marca =txtMarca.getText();
         String modelo = txtModelo.getText();

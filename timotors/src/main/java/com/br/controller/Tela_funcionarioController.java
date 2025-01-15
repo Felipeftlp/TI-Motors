@@ -25,7 +25,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,9 +40,6 @@ import javafx.stage.StageStyle;
  * @author felip
  */
 public class Tela_funcionarioController implements Initializable {
-
-    @FXML
-    private Button btnaddfuncionario;
 
     @FXML
     private TableView<Funcionario> tabelaFuncionario;
@@ -89,6 +85,7 @@ public class Tela_funcionarioController implements Initializable {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void addfuncionario(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Cadastro_funcionarioController.class.getResource("/com/br/Cadastro_funcionario.fxml"));
@@ -108,7 +105,6 @@ public class Tela_funcionarioController implements Initializable {
         carregarDadosTabela();
 
         imagemEditar.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            FuncionarioDAO dao = new FuncionarioDAO();
             Funcionario funcionario = tabelaFuncionario.getSelectionModel().getSelectedItem();
 
             if (funcionario == null) {

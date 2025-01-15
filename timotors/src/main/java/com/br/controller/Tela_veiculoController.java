@@ -25,7 +25,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,8 +40,6 @@ import javafx.stage.StageStyle;
  */
 public class Tela_veiculoController implements Initializable {
     
-    @FXML
-    private Button AddVeiculo;
 
     @FXML
     private TableView<Veiculo> TabelaVeiculo;
@@ -88,7 +85,6 @@ public class Tela_veiculoController implements Initializable {
         VeiculoDAO veicDao = new VeiculoDAO();
         ArrayList<Veiculo> veiculos = veicDao.buscarTodos();
         System.out.println("carregando dados----" + veiculos.size());
-        System.out.println(ColunaID.getText());
 
         //comando para passar para javaFx
         ObservableList<Veiculo> itensveiculosFX = FXCollections.observableArrayList(veiculos);
@@ -97,6 +93,7 @@ public class Tela_veiculoController implements Initializable {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void addveiculo(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Cadastro_veiculoController.class.getResource("/com/br/Cadastro_veiculo.fxml"));
@@ -116,7 +113,6 @@ public class Tela_veiculoController implements Initializable {
         carregarDadosTabela();
         
         imagemEditar.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            VeiculoDAO dao = new VeiculoDAO();
             Veiculo veiculo = TabelaVeiculo.getSelectionModel().getSelectedItem();
 
             if (veiculo == null) {

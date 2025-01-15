@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.br.model.Funcionario;
 
 /**
@@ -21,9 +22,9 @@ public class FuncionarioDAO {
         String sql = "SELECT * FROM funcionario";
         
         // Responsável em guardar o resultado
-        ResultSet resultado = null;
+        ResultSet resultado;
 
-        ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
+        ArrayList<Funcionario> lista = new ArrayList<>();
 
         Connection conn = FabricaConexao.getConnection();
 
@@ -46,7 +47,6 @@ public class FuncionarioDAO {
                 lista.add(objeto);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         
         FabricaConexao.fecharConexao(conn);
@@ -54,6 +54,7 @@ public class FuncionarioDAO {
         return lista;
     }
 
+    @SuppressWarnings("null")
     public Funcionario getById(Integer id) throws ClassNotFoundException {
         if (id == null || id < 0) {
             throw new IllegalArgumentException();
@@ -75,7 +76,6 @@ public class FuncionarioDAO {
                 
                 
         } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             FabricaConexao.fecharConexao(resultado);
         }
@@ -113,7 +113,6 @@ public class FuncionarioDAO {
 
         
         } catch(SQLException e){
-            e.printStackTrace();
         }
         
         return false;
@@ -138,7 +137,6 @@ public class FuncionarioDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -159,7 +157,6 @@ public class FuncionarioDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
 

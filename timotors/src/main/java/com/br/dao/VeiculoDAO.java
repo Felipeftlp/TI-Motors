@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.br.model.Veiculo;
 
 /**
@@ -22,9 +23,9 @@ public class VeiculoDAO {
         String sql = "SELECT * FROM veiculo";
 
         // Responsável em guardar o resultado
-        ResultSet resultado = null;
+        ResultSet resultado;
 
-        ArrayList<Veiculo> lista = new ArrayList<Veiculo>();
+        ArrayList<Veiculo> lista = new ArrayList<>();
 
         Connection conn = FabricaConexao.getConnection();
 
@@ -49,7 +50,6 @@ public class VeiculoDAO {
                 lista.add(objeto);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         FabricaConexao.fecharConexao(conn);
@@ -57,6 +57,7 @@ public class VeiculoDAO {
         return lista;
     }
 
+    @SuppressWarnings("null")
     public Veiculo getById(Integer id) throws ClassNotFoundException {
         if (id == null || id < 0) {
             throw new IllegalArgumentException();
@@ -78,7 +79,6 @@ public class VeiculoDAO {
             objeto.setEstado(resultado.getString("estado"));
             
         } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             FabricaConexao.fecharConexao(resultado);
         }
@@ -117,7 +117,6 @@ public class VeiculoDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return false;
@@ -144,7 +143,6 @@ public class VeiculoDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -164,7 +162,6 @@ public class VeiculoDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
 

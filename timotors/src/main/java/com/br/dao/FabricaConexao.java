@@ -34,7 +34,6 @@ public class FabricaConexao {
                 if (conn != null)
                     conn.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
             }	
         }
 
@@ -44,7 +43,6 @@ public class FabricaConexao {
                 if (s != null)
                         s.close();
         } catch (SQLException e) {
-                e.printStackTrace();
         }
     }
 
@@ -54,7 +52,6 @@ public class FabricaConexao {
                 if (rs != null)
                         rs.close();
         } catch (SQLException e) {
-                e.printStackTrace();
         }
     }
 
@@ -63,7 +60,6 @@ public class FabricaConexao {
 			if (rs != null)
 				rs.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 }

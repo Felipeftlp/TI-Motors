@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.br.model.Cliente;
 
 /**
@@ -21,9 +22,9 @@ public class ClienteDAO {
         String sql = "SELECT * FROM cliente";
         
         // Responsável em guardar o resultado
-        ResultSet resultado = null;
+        ResultSet resultado;
 
-        ArrayList<Cliente> lista = new ArrayList<Cliente>();
+        ArrayList<Cliente> lista = new ArrayList<>();
 
         Connection conn = FabricaConexao.getConnection();
 
@@ -47,7 +48,6 @@ public class ClienteDAO {
                 lista.add(objeto);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         
         FabricaConexao.fecharConexao(conn);
@@ -55,6 +55,7 @@ public class ClienteDAO {
         return lista;
     }
 
+    @SuppressWarnings("null")
     public Cliente getById(Integer id) throws ClassNotFoundException {
         if (id == null || id < 0) {
             throw new IllegalArgumentException();
@@ -76,7 +77,6 @@ public class ClienteDAO {
                 
                 
         } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             FabricaConexao.fecharConexao(resultado);
         }
@@ -115,7 +115,6 @@ public class ClienteDAO {
 
         
         } catch(SQLException e){
-            e.printStackTrace();
         }
         
         return false;
@@ -123,7 +122,7 @@ public class ClienteDAO {
 
     public boolean update(Cliente cliente){
      
-        String sql = "UPDATE funcionario SET nome = ?, cpf = ?, telefone = ?, email = ?, interesse=?"
+        String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, interesse=?"
                 + "WHERE cliente.id_cliente = ?";
         
         try { 
@@ -141,7 +140,6 @@ public class ClienteDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -162,7 +160,6 @@ public class ClienteDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
 

@@ -47,6 +47,7 @@ public class Cadastrar_clienteController implements Initializable {
     private int idCliente;
 
     @FXML
+    @SuppressWarnings("unused")
     private void cadastrarCliente(ActionEvent event) {
         String nome = txtNome.getText();
         String CPF = txtCpf.getText();
@@ -85,7 +86,6 @@ public class Cadastrar_clienteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     private void limparDadosFormulario() {

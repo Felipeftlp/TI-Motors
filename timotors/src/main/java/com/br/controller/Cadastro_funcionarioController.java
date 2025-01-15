@@ -45,6 +45,7 @@ public class Cadastro_funcionarioController implements Initializable {
     private int idFuncionario;
 
      @FXML
+    @SuppressWarnings("unused")
     private void cadastrarFuncionario(ActionEvent event){
         String nome = txtNome.getText();
         String CPF = txtCpf.getText();
@@ -81,7 +82,6 @@ public class Cadastro_funcionarioController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
 
     public TextField getTxtNome() {

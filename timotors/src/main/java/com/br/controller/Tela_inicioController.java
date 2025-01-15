@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -26,28 +25,22 @@ import javafx.scene.layout.StackPane;
 public class Tela_inicioController implements Initializable {
     
     @FXML
-    private Button btnVeiculo;
-  
-    @FXML
-    private Button btnFuncionario;
-
-    @FXML
-    private Button btnCliente;
-
-    @FXML
     private StackPane pilhaPainel;
     
     @FXML
+    @SuppressWarnings("unused")
     private void telaveiculo(ActionEvent event) {
         carregarPagina("Tela_veiculo");
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void telafuncionario(ActionEvent event) {
         carregarPagina("Tela_funcionario");
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void telacliente(ActionEvent event) {
         carregarPagina("Tela_cliente");
     }
@@ -67,7 +60,6 @@ public class Tela_inicioController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
 }

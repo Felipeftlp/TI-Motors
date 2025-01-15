@@ -1,9 +1,10 @@
 module com.br {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires java.logging;
     requires java.sql;
     requires javafx.base;
+    requires transitive javafx.graphics;
 
     opens com.br to javafx.fxml;
     exports com.br;
