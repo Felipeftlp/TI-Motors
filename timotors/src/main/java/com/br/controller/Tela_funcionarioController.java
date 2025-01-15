@@ -72,7 +72,7 @@ public class Tela_funcionarioController implements Initializable {
     @FXML
     public void carregarDadosTabela() {
         tabelaFuncionario.getItems().clear();
-        colunaID.setCellValueFactory(new PropertyValueFactory<>("id_funcionario"));
+        colunaID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));

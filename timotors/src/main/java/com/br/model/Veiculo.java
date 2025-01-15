@@ -11,7 +11,7 @@ package com.br.model;
  */
 public class Veiculo {
     
-    private int id_veiculo;
+    private int id;
     private String marca;
     private String ano;
     private String modelo;
@@ -32,11 +32,11 @@ public class Veiculo {
     }
 
     public int getId() {
-        return id_veiculo;
+        return id;
     }
 
-    public void setId(int id_veiculo) {
-        this.id_veiculo = id_veiculo;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMarca() {

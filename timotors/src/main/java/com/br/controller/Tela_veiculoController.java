@@ -54,7 +54,7 @@ public class Tela_veiculoController implements Initializable {
     private TableColumn<Veiculo, String> ColunaMarca;
 
     @FXML
-    private TableColumn<Veiculo, Integer> ColunaAno;
+    private TableColumn<Veiculo, String> ColunaAno;
 
     @FXML
     private TableColumn<Veiculo, String> ColunaModelo;
@@ -66,7 +66,7 @@ public class Tela_veiculoController implements Initializable {
     private TableColumn<Veiculo, String> ColunaEstado;
 
     @FXML
-    private TableColumn<Veiculo, Double> ColunaPreco;
+    private TableColumn<Veiculo, String> ColunaPreco;
     
     @FXML
     private ImageView imagemEditar;
@@ -88,6 +88,7 @@ public class Tela_veiculoController implements Initializable {
         VeiculoDAO veicDao = new VeiculoDAO();
         ArrayList<Veiculo> veiculos = veicDao.buscarTodos();
         System.out.println("carregando dados----" + veiculos.size());
+        System.out.println(ColunaID.getText());
 
         //comando para passar para javaFx
         ObservableList<Veiculo> itensveiculosFX = FXCollections.observableArrayList(veiculos);

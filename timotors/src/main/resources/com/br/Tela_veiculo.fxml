@@ -22,8 +22,8 @@
          </cursor></Button>
       <TableView fx:id="TabelaVeiculo" layoutX="32.0" layoutY="85.0" prefHeight="230.0" prefWidth="570.0">
         <columns>
-          <TableColumn fx:id="ColunaID" prefWidth="33.0" text="ID" />
-          <TableColumn fx:id="ColunaMarca" prefWidth="96.0" text="Marca" />
+            <TableColumn fx:id="ColunaID" prefWidth="33.0" text="ID" />
+            <TableColumn fx:id="ColunaMarca" prefWidth="96.0" text="Marca" />
             <TableColumn fx:id="ColunaAno" prefWidth="88.0" text="Ano" />
             <TableColumn fx:id="ColunaModelo" prefWidth="110.0" text="Modelo" />
             <TableColumn fx:id="ColunaCor" prefWidth="71.0" text="Cor" />
