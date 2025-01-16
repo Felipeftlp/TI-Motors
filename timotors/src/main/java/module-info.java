@@ -5,6 +5,7 @@ module com.br {
     requires java.sql;
     requires javafx.base;
     requires transitive javafx.graphics;
+    requires io.github.cdimascio.dotenv.java;
 
     opens com.br to javafx.fxml;
     exports com.br;
