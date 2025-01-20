@@ -12,6 +12,7 @@ module com.br {
 
     opens com.br.controller to javafx.fxml;
     exports com.br.controller;
+    exports com.br.model;
 
     opens com.br.model to javafx.base; 
 }

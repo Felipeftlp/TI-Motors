@@ -9,12 +9,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.br.dao.VeiculoDAO;
+import com.br.model.EstadoVeiculo;
 import com.br.model.Veiculo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -41,7 +43,7 @@ public class Cadastro_veiculoController implements Initializable {
     private TextField txtCor;
 
     @FXML
-    private TextField txtEstado;
+    private ComboBox<EstadoVeiculo> comboBoxEstado;
 
     @FXML
     private TextField txtpreco;
@@ -57,7 +59,7 @@ public class Cadastro_veiculoController implements Initializable {
         String modelo = txtModelo.getText();
         String ano = txtAno.getText();
         String cor = txtCor.getText();
-        String estado = txtEstado.getText();
+        EstadoVeiculo estado = comboBoxEstado.getValue();
         String preco = txtpreco.getText();
         
         Veiculo veiculo = new Veiculo();
@@ -75,8 +77,8 @@ public class Cadastro_veiculoController implements Initializable {
             dao.update(veiculo);
         }else{
             dao.create(veiculo);
+            limparDadosFormulario();
         }
-        fecharModal(); 
     }
     
     public void fecharModal(){
@@ -90,7 +92,8 @@ public class Cadastro_veiculoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Adicionando itens ao ComboBox
+        comboBoxEstado.getItems().addAll(EstadoVeiculo.NOVO, EstadoVeiculo.SEMINOVO, EstadoVeiculo.USADO);
     }    
 
     public Button getAddveic() {
@@ -157,12 +160,21 @@ public class Cadastro_veiculoController implements Initializable {
         this.idVeiculo = idVeiculo;
     }
 
-    public TextField getTxtEstado() {
-        return txtEstado;
+    public ComboBox<EstadoVeiculo> getComboBoxEstado() {
+        return comboBoxEstado;
     }
 
-    public void setTxtEstado(TextField txtEstado) {
-        this.txtEstado = txtEstado;
+    public void setComboBoxEstado(ComboBox<EstadoVeiculo> comboBoxEstado) {
+        this.comboBoxEstado = comboBoxEstado;
+    }
+
+    public void limparDadosFormulario() {
+        comboBoxEstado.setValue(EstadoVeiculo.NOVO);
+        txtAno.setText("");
+        txtCor.setText("");
+        txtMarca.setText("");
+        txtModelo.setText("");
+        txtpreco.setText("");
     }
     
 }

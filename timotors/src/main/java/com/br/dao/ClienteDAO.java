@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.br.model.Cliente;
+import com.br.model.EstadoVeiculo;
 
 /**
  *
@@ -38,12 +39,24 @@ public class ClienteDAO {
                 //Antes a gente estava imprimindo.
                 // Agora estamos guardando no arrayList
                 Cliente objeto = new Cliente();
-                objeto.setId_cliente(resultado.getInt("id_cliente"));
+                objeto.setId(resultado.getInt("id_cliente"));
                 objeto.setNome(resultado.getString("nome"));
                 objeto.setCpf(resultado.getString("cpf"));
                 objeto.setEmail(resultado.getString("email"));
                 objeto.setTelefone(resultado.getString("telefone"));
-                objeto.setInteresse(resultado.getString("interesse"));
+                objeto.setEndereco(resultado.getString("endereco"));
+                
+                String interesseString = resultado.getString("interesse");
+                try {
+                    if (interesseString != null) {
+                        EstadoVeiculo interesse = EstadoVeiculo.valueOf(interesseString.toUpperCase());
+                        objeto.setInteresse(interesse);
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Estado inválido encontrado: " + interesseString);
+                    // Definir um estado padrão ou lidar com o erro
+                    objeto.setInteresse(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+                }
                 
                 lista.add(objeto);
             }
@@ -68,13 +81,24 @@ public class ClienteDAO {
             resultado = ps.executeQuery();
             resultado.next();
              
-            objeto.setId_cliente(resultado.getInt("id_cliente"));
+            objeto.setId(resultado.getInt("id_cliente"));
             objeto.setNome(resultado.getString("nome"));
             objeto.setCpf(resultado.getString("cpf"));
             objeto.setEmail(resultado.getString("email"));
             objeto.setTelefone(resultado.getString("telefone"));
-            objeto.setInteresse(resultado.getString("interesse"));
-                
+            objeto.setEndereco(resultado.getString("endereco"));
+
+            String interesseString = resultado.getString("interesse");
+            try {
+                if (interesseString != null) {
+                    EstadoVeiculo interesse = EstadoVeiculo.valueOf(interesseString.toUpperCase());
+                    objeto.setInteresse(interesse);
+                }
+            } catch (IllegalArgumentException e) {
+                System.err.println("Estado inválido encontrado: " + interesseString);
+                // Definir um estado padrão ou lidar com o erro
+                objeto.setInteresse(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+            }
                 
         } catch (SQLException e) {
         } finally {
@@ -92,8 +116,8 @@ public class ClienteDAO {
     public boolean create(Cliente objeto){
        
         try{
-            String comando = "INSERT INTO cliente (nome,cpf,telefone,email,interesse) VALUES"
-                    + " (?, ?, ?, ?, ?)";
+            String comando = "INSERT INTO cliente (nome,cpf,telefone,email,endereco,interesse) VALUES"
+                    + " (?, ?, ?, ?, ?, ?)";
 
             Connection conn = FabricaConexao.getConnection();
             //revisor DE  SQL
@@ -103,7 +127,8 @@ public class ClienteDAO {
             ps.setString(2, objeto.getCpf());
             ps.setString(3, objeto.getTelefone());
             ps.setString(4, objeto.getEmail());
-            ps.setString(5, objeto.getInteresse());
+            ps.setString(5, objeto.getEndereco());
+            ps.setString(6, objeto.getInteresse().name());
             
             //inserindo no banco.
             int linhasAfetadas = ps.executeUpdate();
@@ -122,7 +147,7 @@ public class ClienteDAO {
 
     public boolean update(Cliente cliente){
      
-        String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, interesse=?"
+        String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, endereco = ?, interesse = ?"
                 + "WHERE cliente.id_cliente = ?";
         
         try { 
@@ -132,8 +157,9 @@ public class ClienteDAO {
             ps.setString(2, cliente.getCpf() );
             ps.setString(3, cliente.getTelefone() );
             ps.setString(4, cliente.getEmail());
-            ps.setString(5, cliente.getInteresse());
-            ps.setInt(6, cliente.getId_cliente());
+            ps.setString(5, cliente.getEndereco());
+            ps.setString(6, cliente.getInteresse().name());
+            ps.setInt(7, cliente.getId());
             
             int linhasAfetadas = ps.executeUpdate();
             if (linhasAfetadas > 0) {

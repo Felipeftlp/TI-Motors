@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.br.model.EstadoVeiculo;
 import com.br.model.Veiculo;
 
 /**
@@ -45,7 +46,19 @@ public class VeiculoDAO {
                 objeto.setAno(resultado.getString("ano"));
                 objeto.setCor(resultado.getString("cor"));
                 objeto.setPreco(resultado.getString("preco"));
-                objeto.setEstado(resultado.getString("estado"));
+                
+                // Conversão de String para EstadoVeiculo
+                String estadoString = resultado.getString("estado");
+                try {
+                    if (estadoString != null) {
+                        EstadoVeiculo estado = EstadoVeiculo.valueOf(estadoString.toUpperCase());
+                        objeto.setEstado(estado);
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Estado inválido encontrado: " + estadoString);
+                    // Definir um estado padrão ou lidar com o erro
+                    objeto.setEstado(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+                }
                 
                 lista.add(objeto);
             }
@@ -76,7 +89,19 @@ public class VeiculoDAO {
             objeto.setAno(resultado.getString("ano"));
             objeto.setCor(resultado.getString("cor"));
             objeto.setPreco(resultado.getString("preco"));
-            objeto.setEstado(resultado.getString("estado"));
+            
+            // Conversão de String para EstadoVeiculo
+            String estadoString = resultado.getString("estado");
+            try {
+                if (estadoString != null) {
+                    EstadoVeiculo estado = EstadoVeiculo.valueOf(estadoString.toUpperCase());
+                    objeto.setEstado(estado);
+                }
+            } catch (IllegalArgumentException e) {
+                System.err.println("Estado inválido encontrado: " + estadoString);
+                // Definir um estado padrão ou lidar com o erro
+                objeto.setEstado(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+            }
             
         } catch (SQLException e) {
         } finally {
@@ -106,7 +131,7 @@ public class VeiculoDAO {
             ps.setString(3, objeto.getAno());
             ps.setString(4, objeto.getPreco());
             ps.setString(5, objeto.getCor());
-            ps.setString(6, objeto.getEstado());
+            ps.setString(6, objeto.getEstado().name());
 
             //inserindo no banco.
             int linhasAfetadas = ps.executeUpdate();
@@ -135,7 +160,7 @@ public class VeiculoDAO {
             ps.setString(3, veiculo.getAno());
             ps.setString(4, veiculo.getPreco());
             ps.setString(5, veiculo.getCor());
-            ps.setString(6, veiculo.getEstado());
+            ps.setString(6, veiculo.getEstado().name());
             ps.setInt(7, veiculo.getId());
 
             int linhasAfetadas = ps.executeUpdate();

@@ -11,9 +11,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="415.0" prefWidth="650.0" style="-fx-background-color: #788073;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Tela_funcionarioController">
+<AnchorPane id="AnchorPane" prefHeight="477.0" prefWidth="861.0" style="-fx-background-color: #788073;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Tela_funcionarioController">
    <children>
-      <Button fx:id="btnaddfuncionario" layoutX="514.0" layoutY="329.0" mnemonicParsing="false" onAction="#addfuncionario" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #9ACC7A;" text="Cadastrar" wrapText="true">
+      <Button fx:id="btnaddfuncionario" layoutX="746.0" layoutY="415.0" mnemonicParsing="false" onAction="#addfuncionario" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #9ACC7A;" text="Cadastrar" wrapText="true">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font>
@@ -24,30 +24,33 @@
          <font>
             <Font name="Eras Bold ITC" size="20.0" />
          </font></Label>
-      <TableView fx:id="tabelaFuncionario" layoutX="34.0" layoutY="84.0" prefHeight="230.0" prefWidth="570.0">
+      <TableView fx:id="tabelaFuncionario" layoutX="44.0" layoutY="89.0" prefHeight="300.0" prefWidth="773.0">
         <columns>
-          <TableColumn fx:id="colunaID" prefWidth="37.0" text="ID" />
-          <TableColumn fx:id="colunaNome" prefWidth="125.0" text="Nome" />
-            <TableColumn fx:id="colunaCPF" prefWidth="135.0" text="CPF" />
-            <TableColumn fx:id="colunaTelefone" prefWidth="137.0" text="Telefone" />
-            <TableColumn fx:id="colunaEmail" prefWidth="148.0" text="Email" />
+          <TableColumn fx:id="colunaID" prefWidth="27.0" text="ID" />
+          <TableColumn fx:id="colunaNome" prefWidth="153.0" text="Nome" />
+            <TableColumn fx:id="colunaCPF" prefWidth="102.0" text="CPF" />
+            <TableColumn fx:id="colunaTelefone" prefWidth="101.0" text="Telefone" />
+            <TableColumn fx:id="colunaEmail" prefWidth="123.0" text="Email" />
+            <TableColumn fx:id="colunaSalario" prefWidth="74.0" text="Salario" />
+            <TableColumn fx:id="colunaCargo" prefWidth="81.0" text="Cargo" />
+            <TableColumn fx:id="colunaDataAdmissao" prefWidth="111.0" text="Data de admissão" />
         </columns>
       </TableView>
-      <Button layoutX="409.0" layoutY="329.0" mnemonicParsing="false" onAction="#carregarDadosTabela" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #F7F54F;" text="Atualizar">
+      <Button layoutX="639.0" layoutY="415.0" mnemonicParsing="false" onAction="#carregarDadosTabela" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #F7F54F;" text="Atualizar">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fx:id="imagemRemover" fitHeight="45.0" fitWidth="45.0" layoutX="100.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagemRemover" fitHeight="45.0" fitWidth="45.0" layoutX="87.0" layoutY="408.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/lixeira-de-reciclagem.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ImageView>
-      <ImageView fx:id="imagemEditar" fitHeight="45.0" fitWidth="45.0" layoutX="34.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagemEditar" fitHeight="45.0" fitWidth="45.0" layoutX="22.0" layoutY="408.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/lapis.png" />
          </image>

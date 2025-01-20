@@ -62,6 +62,9 @@ public class Tela_clienteController implements Initializable {
     private TableColumn<?, ?> colunaInteresse;
 
     @FXML
+    private TableColumn<?, ?> colunaEndereco;
+
+    @FXML
     private ImageView imagemEditar;
 
     @FXML
@@ -70,12 +73,14 @@ public class Tela_clienteController implements Initializable {
     @FXML
     public void carregarDadosTabela() {
         tabelaCliente.getItems().clear();
-        colunaID.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
+        colunaID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaInteresse.setCellValueFactory(new PropertyValueFactory<>("interesse"));
+        colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+
 
         ClienteDAO clienteDao = new ClienteDAO();
         ArrayList<Cliente> clientes = clienteDao.buscarTodos();
@@ -129,9 +134,10 @@ public class Tela_clienteController implements Initializable {
                 controller.getTxtCpf().setText(cliente.getCpf());
                 controller.getTxtTelefone().setText(cliente.getTelefone());
                 controller.getTxtEmail().setText(cliente.getEmail());
-                controller.getTxtInteresse().setText(cliente.getInteresse());
+                controller.getComboBoxInteresse().setValue(cliente.getInteresse());
+                controller.getTxtEndereco().setText(cliente.getEndereco());
                 controller.setUpdate(Boolean.TRUE);
-                controller.setIdCliente(cliente.getId_cliente());
+                controller.setIdCliente(cliente.getId());
 
                 Parent parent = loader.getRoot();
                 Stage stage = new Stage();
@@ -150,7 +156,7 @@ public class Tela_clienteController implements Initializable {
                 erroAlert.setContentText("Selecione um cliente para remover");
                 erroAlert.showAndWait();
             } else {
-                dao.delete(cliente.getId_cliente());
+                dao.delete(cliente.getId());
                 carregarDadosTabela();
             }
         });

@@ -5,40 +5,37 @@
  */
 package com.br.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
  * @author felip
  */
 public class Funcionario extends Pessoa implements Salario{
-    private String cargo;
+    private Cargo cargo;
     private double salario;
-    private String turno;
-    private String departamento;
-    private int anosExperiencia;
-    private Date dataAdmissao;
+    private int anosNaEmpresa;
+    private LocalDate dataAdmissao;
 
     public Funcionario() {
         super();
     }
 
-    public Funcionario(int id, String nome, String cpf, String telefone, String email, String cargo, 
-                       double salario, String turno, String departamento, int anosExperiencia, Date dataAdmissao) {
+    public Funcionario(int id, String nome, String cpf, String telefone, String email, Cargo cargo, 
+                       double salario, int anosNaEmpresa, LocalDate dataAdmissao) {
         super(id, nome, cpf, telefone, email);
         this.cargo = cargo;
         this.salario = salario;
-        this.turno = turno;
-        this.departamento = departamento;
-        this.anosExperiencia = anosExperiencia;
+        this.anosNaEmpresa = anosNaEmpresa;
         this.dataAdmissao = dataAdmissao;
     }
 
-    public String getCargo() {
+    public Cargo getCargo() {
         return cargo;
     }
 
-    public void setCargo(String cargo) {
+    public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
 
@@ -46,66 +43,68 @@ public class Funcionario extends Pessoa implements Salario{
         return salario;
     }
 
-    public void setSalario(double salario) {
-        this.salario = salario;
+    public void setSalario() {
+        this.salario = CalcularSalario(cargo, anosNaEmpresa);
     }
 
-    public String getTurno() {
-        return turno;
+    // Sobrecarga para definir o salário diretamente
+    public void setSalario(String salario) {
+        this.salario = Double.parseDouble(salario);
     }
 
-    public void setTurno(String turno) {
-        this.turno = turno;
+    public int getAnosNaEmpresa() {
+        return anosNaEmpresa;
     }
 
-    public String getDepartamento() {
-        return departamento;
+    public void setAnosNaEmpresa() {
+        this.anosNaEmpresa = CalcularAnosNaEmpresa(dataAdmissao);
     }
 
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
+    // Sobrecarga para definir anos de experiência diretamente
+    public void setAnosNaEmpresa(int anosNaEmpresa) {
+        this.anosNaEmpresa = anosNaEmpresa;
     }
 
-    public int getAnosExperiencia() {
-        return anosExperiencia;
-    }
-
-    public void setAnosExperiencia(int anosExperiencia) {
-        this.anosExperiencia = anosExperiencia;
-    }
-
-    public Date getDataAdmissao() {
+    public LocalDate getDataAdmissao() {
         return dataAdmissao;
     }
 
-    public void setDataAdmissao(Date dataAdmissao) {
+    public void setDataAdmissao(LocalDate dataAdmissao) {
         this.dataAdmissao = dataAdmissao;
     }
 
     @Override
-    public float CalcularSalario(int id, String cargo, int anosExperiencia) {
-        float salarioBase = 3000.00f; // Definindo um valor base para o salário
+    public double CalcularSalario(Cargo cargo, int anosNaEmpresa) {
+        double salarioBase = 3000.00f; // Definindo um valor base para o salário
 
         // Ajuste do salário com base no cargo
-        switch (cargo.toLowerCase()) {
-            case "analista":
+        switch (cargo) {
+            case ANALISTA:
                 salarioBase += 1000;
                 break;
-            case "gerente":
+            case GERENTE:
                 salarioBase += 3000;
                 break;
-            case "diretor":
+            case DIRETOR:
                 salarioBase += 5000;
                 break;
-            default:
+            case VENDEDOR:
                 salarioBase += 500;
                 break;
         }
 
         // Ajuste do salário com base nos anos de experiência
-        salarioBase += anosExperiencia * 200;
+        salarioBase += anosNaEmpresa * 200;
 
         return salarioBase;
+    }
+
+    @Override
+    public int CalcularAnosNaEmpresa(LocalDate dataAdmissao) {
+        
+        double tempoNaEmpresa = ChronoUnit.YEARS.between(dataAdmissao, LocalDate.now());
+
+        return (int) tempoNaEmpresa;
     }
 
     // Método toString
@@ -114,9 +113,7 @@ public class Funcionario extends Pessoa implements Salario{
         return "Funcionario{" +
                 "cargo='" + cargo + '\'' +
                 ", salario=" + salario +
-                ", turno='" + turno + '\'' +
-                ", departamento='" + departamento + '\'' +
-                ", anosExperiencia=" + anosExperiencia +
+                ", anosExperiencia=" + anosNaEmpresa +
                 ", dataAdmissao=" + dataAdmissao +
                 "} " + super.toString();
     }

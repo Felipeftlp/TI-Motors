@@ -10,11 +10,13 @@ import java.util.ResourceBundle;
 
 import com.br.dao.ClienteDAO;
 import com.br.model.Cliente;
+import com.br.model.EstadoVeiculo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -40,7 +42,10 @@ public class Cadastrar_clienteController implements Initializable {
     private TextField txtTelefone;
 
     @FXML
-    private TextField txtInteresse;
+    private ComboBox<EstadoVeiculo> comboBoxInteresse;
+
+    @FXML
+    private TextField txtEndereco;
 
     private boolean update;
 
@@ -53,7 +58,8 @@ public class Cadastrar_clienteController implements Initializable {
         String CPF = txtCpf.getText();
         String Telefone = txtTelefone.getText();
         String Email = txtEmail.getText();
-        String Interesse = txtInteresse.getText();
+        EstadoVeiculo Interesse = comboBoxInteresse.getValue();
+        String Endereco = txtEndereco.getText();
 
         Cliente cliente = new Cliente();
         cliente.setNome(nome);
@@ -61,18 +67,17 @@ public class Cadastrar_clienteController implements Initializable {
         cliente.setTelefone(Telefone);
         cliente.setEmail(Email);
         cliente.setInteresse(Interesse);
+        cliente.setEndereco(Endereco);
 
         ClienteDAO dao = new ClienteDAO();
 
         if (update) {
-            cliente.setId_cliente(idCliente);
+            cliente.setId(idCliente);
             dao.update(cliente);
         } else {
             dao.create(cliente);
             limparDadosFormulario();
         }
-
-        fecharModal();
     }
 
     public void fecharModal() {
@@ -86,6 +91,8 @@ public class Cadastrar_clienteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Adicionando itens ao ComboBox
+        comboBoxInteresse.getItems().addAll(EstadoVeiculo.NOVO, EstadoVeiculo.SEMINOVO, EstadoVeiculo.USADO);
     }
 
     private void limparDadosFormulario() {
@@ -93,7 +100,8 @@ public class Cadastrar_clienteController implements Initializable {
         txtCpf.setText("");
         txtEmail.setText("");
         txtTelefone.setText("");
-        txtInteresse.setText("");
+        txtEndereco.setText("");
+        comboBoxInteresse.setValue(EstadoVeiculo.NOVO);
     }
 
     public Button getAddCli() {
@@ -136,12 +144,20 @@ public class Cadastrar_clienteController implements Initializable {
         this.txtTelefone = txtTelefone;
     }
 
-    public TextField getTxtInteresse() {
-        return txtInteresse;
+    public ComboBox<EstadoVeiculo> getComboBoxInteresse() {
+        return comboBoxInteresse;
     }
 
-    public void setTxtInteresse(TextField txtInteresse) {
-        this.txtInteresse = txtInteresse;
+    public void setComboBoxInteresse(ComboBox<EstadoVeiculo> comboBoxInteresse) {
+        this.comboBoxInteresse = comboBoxInteresse;
+    }
+
+    public TextField getTxtEndereco() {
+        return txtEndereco;
+    }
+
+    public void setTxtEndereco(TextField txtEndereco) {
+        this.txtEndereco = txtEndereco;
     }
 
     public boolean isUpdate() {

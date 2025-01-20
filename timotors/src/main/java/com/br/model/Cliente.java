@@ -11,27 +11,25 @@ package com.br.model;
  */
 public class Cliente extends Pessoa{
     
-    private String interesse;
+    private EstadoVeiculo interesse;
     private String endereco;
-    private String historicoCompras;
 
     public Cliente() {
         super();
     }
 
-    public Cliente(int id, String nome, String cpf, String telefone, String email, String interesse, 
-                   String endereco, String historicoCompras) {
+    public Cliente(int id, String nome, String cpf, String telefone, String email, EstadoVeiculo interesse, 
+                   String endereco) {
         super(id, nome, cpf, telefone, email);
         this.interesse = interesse;
         this.endereco = endereco;
-        this.historicoCompras = historicoCompras;
     }
 
-    public String getInteresse() {
+    public EstadoVeiculo getInteresse() {
         return interesse;
     }
 
-    public void setInteresse(String interesse) {
+    public void setInteresse(EstadoVeiculo interesse) {
         this.interesse = interesse;
     }
 
@@ -43,20 +41,11 @@ public class Cliente extends Pessoa{
         this.endereco = endereco;
     }
 
-    public String getHistoricoCompras() {
-        return historicoCompras;
-    }
-
-    public void setHistoricoCompras(String historicoCompras) {
-        this.historicoCompras = historicoCompras;
-    }
-
     @Override
     public String toString() {
         return "Cliente{" +
                 "interesse='" + interesse + '\'' +
                 ", endereco='" + endereco + '\'' +
-                ", historicoCompras='" + historicoCompras + '\'' +
                 "} " + super.toString();
     }
     

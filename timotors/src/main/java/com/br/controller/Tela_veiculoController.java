@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.br.dao.VeiculoDAO;
+import com.br.model.EstadoVeiculo;
 import com.br.model.Veiculo;
 
 import javafx.collections.FXCollections;
@@ -60,7 +61,7 @@ public class Tela_veiculoController implements Initializable {
     private TableColumn<Veiculo, String> ColunaCor;
 
     @FXML
-    private TableColumn<Veiculo, String> ColunaEstado;
+    private TableColumn<Veiculo, EstadoVeiculo> ColunaEstado;
 
     @FXML
     private TableColumn<Veiculo, String> ColunaPreco;
@@ -134,7 +135,7 @@ public class Tela_veiculoController implements Initializable {
                 controller.getTxtAno().setText(veiculo.getAno());
                 controller.getTxtModelo().setText(veiculo.getModelo());
                 controller.getTxtCor().setText(veiculo.getCor());
-                controller.getTxtEstado().setText(veiculo.getEstado());
+                controller.getComboBoxEstado().setValue(veiculo.getEstado());
                 controller.getTxtpreco().setText(veiculo.getPreco());
                 controller.setUpdate(Boolean.TRUE);
                 controller.setIdVeiculo(veiculo.getId());

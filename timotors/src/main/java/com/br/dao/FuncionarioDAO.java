@@ -6,11 +6,14 @@
 package com.br.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.br.model.Cargo;
 import com.br.model.Funcionario;
 
 /**
@@ -43,7 +46,26 @@ public class FuncionarioDAO {
                 objeto.setCpf(resultado.getString("cpf"));
                 objeto.setEmail(resultado.getString("email"));
                 objeto.setTelefone(resultado.getString("telefone"));
-                
+                objeto.setSalario(resultado.getString("salario"));
+                objeto.setAnosNaEmpresa(resultado.getInt("anosNaEmpresa"));
+
+                // Conversão de String para EstadoVeiculo
+                String dataAdmissaoString = resultado.getString("dataAdmissao");
+                String cargoString = resultado.getString("cargo");
+                try {
+                    if (cargoString != null && dataAdmissaoString != null) {
+                        LocalDate dataAdmissao = LocalDate.parse(dataAdmissaoString);
+                        objeto.setDataAdmissao(dataAdmissao);
+
+                        Cargo cargo = Cargo.valueOf(cargoString.toUpperCase());
+                        objeto.setCargo(cargo);
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Estado inválido encontrado: " + cargoString);
+                    // Definir um estado padrão ou lidar com o erro
+                    objeto.setCargo(Cargo.VENDEDOR); // Exemplo de estado padrão
+                }
+
                 lista.add(objeto);
             }
         } catch (SQLException e) {
@@ -72,8 +94,25 @@ public class FuncionarioDAO {
             objeto.setCpf(resultado.getString("cpf"));
             objeto.setEmail(resultado.getString("email"));
             objeto.setTelefone(resultado.getString("telefone"));
-            
-                
+            objeto.setSalario(resultado.getString("salario"));
+            objeto.setAnosNaEmpresa(resultado.getInt("anosNaEmpresa"));
+
+            // Conversão de String para EstadoVeiculo
+            String dataAdmissaoString = resultado.getString("dataAdmissao");
+            String cargoString = resultado.getString("cargo");
+            try {
+                if (cargoString != null && dataAdmissaoString != null) {
+                    LocalDate dataAdmissao = LocalDate.parse(dataAdmissaoString);
+                    objeto.setDataAdmissao(dataAdmissao);
+
+                    Cargo cargo = Cargo.valueOf(cargoString.toUpperCase());
+                    objeto.setCargo(cargo);
+                }
+            } catch (IllegalArgumentException e) {
+                System.err.println("Estado inválido encontrado: " + cargoString);
+                // Definir um estado padrão ou lidar com o erro
+                objeto.setCargo(Cargo.VENDEDOR); // Exemplo de estado padrão
+            }        
                 
         } catch (SQLException e) {
         } finally {
@@ -91,8 +130,8 @@ public class FuncionarioDAO {
     public boolean create(Funcionario objeto){
        
         try{
-            String comando = "INSERT INTO funcionario (nome,cpf,telefone,email) VALUES"
-                    + " (?, ?, ?, ?)";
+            String comando = "INSERT INTO funcionario (nome,cpf,telefone,email,salario,anosNaEmpresa,dataAdmissao,cargo) VALUES"
+                    + " (?, ?, ?, ?, ?, ?, ?, ?)";
 
             Connection conn = FabricaConexao.getConnection();
             //revisor DE  SQL
@@ -102,7 +141,11 @@ public class FuncionarioDAO {
             ps.setString(2, objeto.getCpf());
             ps.setString(3, objeto.getTelefone());
             ps.setString(4, objeto.getEmail());
-            
+            ps.setDouble(5, objeto.getSalario());
+            ps.setInt(6, objeto.getAnosNaEmpresa());
+            ps.setDate(7, Date.valueOf(objeto.getDataAdmissao()));
+            ps.setString(8, objeto.getCargo().name());
+
             //inserindo no banco.
             int linhasAfetadas = ps.executeUpdate();
             FabricaConexao.fecharConexao(conn);
@@ -120,7 +163,7 @@ public class FuncionarioDAO {
 
     public boolean update(Funcionario funcionario){
      
-        String sql = "UPDATE funcionario SET nome = ?, cpf = ?, telefone = ?, email = ?"
+        String sql = "UPDATE funcionario SET nome = ?, cpf = ?, telefone = ?, email = ?, salario = ?, anosNaEmpresa = ?, dataAdmissao = ?, cargo = ?"
                 + "WHERE funcionario.id_funcionario = ?";
         
         try { 
@@ -130,7 +173,11 @@ public class FuncionarioDAO {
             ps.setString(2, funcionario.getCpf() );
             ps.setString(3, funcionario.getTelefone() );
             ps.setString(4, funcionario.getEmail());
-            ps.setInt(5, funcionario.getId() );
+            ps.setDouble(5, funcionario.getSalario());
+            ps.setInt(6, funcionario.getAnosNaEmpresa());
+            ps.setDate(7, Date.valueOf(funcionario.getDataAdmissao()));
+            ps.setString(8, funcionario.getCargo().name());
+            ps.setInt(9, funcionario.getId());
             
             int linhasAfetadas = ps.executeUpdate();
             if (linhasAfetadas > 0) {

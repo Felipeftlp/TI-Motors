@@ -58,6 +58,15 @@ public class Tela_funcionarioController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> colunaEmail;
+    
+    @FXML
+    private TableColumn<?, ?> colunaCargo;
+    
+    @FXML
+    private TableColumn<?, ?> colunaSalario;
+
+    @FXML
+    private TableColumn<?, ?> colunaDataAdmissao;
 
     @FXML
     private ImageView imagemEditar;
@@ -73,6 +82,10 @@ public class Tela_funcionarioController implements Initializable {
         colunaCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colunaCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+        colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+        colunaDataAdmissao.setCellValueFactory(new PropertyValueFactory<>("dataAdmissao"));
+
 
         FuncionarioDAO funcDao = new FuncionarioDAO();
         ArrayList<Funcionario> funcionarios = funcDao.buscarTodos();
@@ -126,6 +139,8 @@ public class Tela_funcionarioController implements Initializable {
                 controller.getTxtCpf().setText(funcionario.getCpf());
                 controller.getTxtTelefone().setText(funcionario.getTelefone());
                 controller.getTxtEmail().setText(funcionario.getEmail());
+                controller.getComboBoxCargo().setValue(funcionario.getCargo());
+                controller.getDataAdmissao().setValue(funcionario.getDataAdmissao());
                 controller.setUpdate(Boolean.TRUE);
                 controller.setIdFuncionario(funcionario.getId());
 

@@ -18,9 +18,8 @@ CREATE TABLE cliente (
     cpf VARCHAR(11) NOT NULL,
     telefone VARCHAR(11) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    interesse VARCHAR(30) NOT NULL,
     endereco VARCHAR(255) NOT NULL,
-    historicoCompras TEXT
+    interesse ENUM('USADO', 'SEMINOVO', 'NOVO') NOT NULL
 );
 
 CREATE TABLE funcionario (
@@ -29,10 +28,8 @@ CREATE TABLE funcionario (
     cpf VARCHAR(11) NOT NULL,
     telefone VARCHAR(11) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    cargo VARCHAR(100) NOT NULL,
     salario DECIMAL(10, 2) NOT NULL,
-    turno VARCHAR(50) NOT NULL,
-    departamento VARCHAR(100) NOT NULL,
-    anosExperiencia INT NOT NULL,
-    dataAdmissao DATE NOT NULL
+    anosNaEmpresa INT NOT NULL,
+    dataAdmissao DATE NOT NULL,
+    cargo ENUM('ANALISTA', 'GERENTE', 'DIRETOR', 'VENDEDOR') NOT NULL
 );
