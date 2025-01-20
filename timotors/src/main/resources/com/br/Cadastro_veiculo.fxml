@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="883.0" style="-fx-background-color: #3C4039;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Cadastro_veiculoController">
+<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="883.0" style="-fx-background-color: #3C4039;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Cadastro_veiculoController">
    <children>
       <Button fx:id="Addveic" layoutX="121.0" layoutY="382.0" mnemonicParsing="false" onAction="#cadastrarVeiculo" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #f83639;" text="Salvar" textFill="WHITE">
          <font>
@@ -57,7 +57,7 @@
       <TextField fx:id="txtpreco" layoutX="294.0" layoutY="329.0" prefHeight="30.0" prefWidth="150.0" />
       <HBox prefHeight="77.0" prefWidth="883.0" style="-fx-background-color: black;">
          <children>
-            <Label prefHeight="69.0" prefWidth="222.0" text="FEMAR" textFill="WHITE">
+            <Label prefHeight="70.0" prefWidth="1040.0" text="TiMotors" textFill="WHITE">
                <font>
                   <Font name="Eras Bold ITC" size="49.0" />
                </font>
@@ -68,7 +68,7 @@
                   <Insets />
                </HBox.margin>
             </Label>
-            <Label prefHeight="25.0" prefWidth="105.0" text="VEÍCULOS" textFill="#f83639">
+            <Label prefHeight="62.0" prefWidth="907.0" text="VEÍCULOS" textFill="#f83639">
                <font>
                   <Font name="Eras Bold ITC" size="20.0" />
                </font>
@@ -86,7 +86,7 @@
             </ImageView>
          </children>
       </HBox>
-      <Line endX="148.0" endY="-1.0" layoutX="418.0" layoutY="125.0" startX="-100.0" stroke="#f83639" strokeWidth="2.0" />
+      <Line endX="148.0" endY="-1.0" layoutX="412.0" layoutY="125.0" startX="-100.0" stroke="#f83639" strokeWidth="2.0" />
       <ImageView fitHeight="201.0" fitWidth="197.0" layoutX="480.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/car3d.png" />
@@ -98,7 +98,7 @@
          </image>
       </ImageView>
       <ComboBox fx:id="comboBoxEstado" layoutX="120.0" layoutY="329.0" prefHeight="30.0" prefWidth="150.0" />
-      <Button onAction="#fecharModal" layoutX="219.0" layoutY="382.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: black;" text="Voltar" textFill="WHITE">
+      <Button layoutX="219.0" layoutY="382.0" mnemonicParsing="false" onAction="#fecharModal" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: black;" text="Voltar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

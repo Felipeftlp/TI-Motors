@@ -11,45 +11,45 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="415.0" prefWidth="650.0" style="-fx-background-color: #788073;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Tela_veiculoController">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="860.0" style="-fx-background-color: #788073;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Tela_veiculoController">
    <children>
-      <Button fx:id="AddVeiculo" layoutX="512.0" layoutY="338.0" mnemonicParsing="false" onAction="#addveiculo" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #9ACC7A;" text="Cadastrar">
+      <Button fx:id="AddVeiculo" layoutX="721.0" layoutY="418.0" mnemonicParsing="false" onAction="#addveiculo" prefHeight="30.0" prefWidth="101.0" style="-fx-background-color: #9ACC7A;" text="Cadastrar">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TableView fx:id="TabelaVeiculo" layoutX="32.0" layoutY="85.0" prefHeight="230.0" prefWidth="570.0">
+      <TableView fx:id="TabelaVeiculo" layoutX="32.0" layoutY="85.0" prefHeight="301.0" prefWidth="790.0">
         <columns>
-            <TableColumn fx:id="ColunaID" prefWidth="33.0" text="ID" />
-            <TableColumn fx:id="ColunaMarca" prefWidth="96.0" text="Marca" />
-            <TableColumn fx:id="ColunaAno" prefWidth="88.0" text="Ano" />
-            <TableColumn fx:id="ColunaModelo" prefWidth="110.0" text="Modelo" />
-            <TableColumn fx:id="ColunaCor" prefWidth="71.0" text="Cor" />
-            <TableColumn fx:id="ColunaEstado" prefWidth="97.0" text="Estado" />
-            <TableColumn fx:id="ColunaPreco" prefWidth="76.0" text="Preço" />
+            <TableColumn fx:id="ColunaID" prefWidth="49.0" text="ID" />
+            <TableColumn fx:id="ColunaMarca" prefWidth="126.0" text="Marca" />
+            <TableColumn fx:id="ColunaAno" prefWidth="101.0" text="Ano" />
+            <TableColumn fx:id="ColunaModelo" prefWidth="164.0" text="Modelo" />
+            <TableColumn fx:id="ColunaCor" prefWidth="96.0" text="Cor" />
+            <TableColumn fx:id="ColunaEstado" prefWidth="130.0" text="Estado" />
+            <TableColumn fx:id="ColunaPreco" prefWidth="123.0" text="Preço" />
         </columns>
       </TableView>
       <Label layoutX="32.0" layoutY="25.0" text="VEÍCULOS" textFill="WHITE">
          <font>
             <Font name="Eras Bold ITC" size="20.0" />
          </font></Label>
-      <Button layoutX="406.0" layoutY="338.0" mnemonicParsing="false" onAction="#carregarDadosTabela" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #F7F54F;" text="Atualizar">
+      <Button layoutX="615.0" layoutY="418.0" mnemonicParsing="false" onAction="#carregarDadosTabela" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #F7F54F;" text="Atualizar">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <ImageView fx:id="imagemRemover" fitHeight="45.0" fitWidth="45.0" layoutX="98.0" layoutY="330.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagemRemover" fitHeight="45.0" fitWidth="45.0" layoutX="98.0" layoutY="410.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/lixeira-de-reciclagem.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ImageView>
-      <ImageView fx:id="imagemEditar" fitHeight="45.0" fitWidth="45.0" layoutX="32.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagemEditar" fitHeight="45.0" fitWidth="45.0" layoutX="32.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/lapis.png" />
          </image>

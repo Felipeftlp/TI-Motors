@@ -169,7 +169,7 @@ public class Cadastro_veiculoController implements Initializable {
     }
 
     public void limparDadosFormulario() {
-        comboBoxEstado.setValue(EstadoVeiculo.NOVO);
+        comboBoxEstado.setValue(null);
         txtAno.setText("");
         txtCor.setText("");
         txtMarca.setText("");

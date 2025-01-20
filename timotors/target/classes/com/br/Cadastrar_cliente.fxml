@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="883.0" style="-fx-background-color: #3C4039;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Cadastrar_clienteController">
+<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="883.0" style="-fx-background-color: #3C4039;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Cadastrar_clienteController">
    <children>
       <Label layoutX="125.0" layoutY="177.0" text="Nome" textFill="WHITE">
          <font>
@@ -39,43 +39,12 @@
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font></Label>
-      <HBox layoutX="-4.0" prefHeight="77.0" prefWidth="883.0" style="-fx-background-color: black;">
-         <children>
-            <Label prefHeight="69.0" prefWidth="222.0" text="FEMAR" textFill="WHITE">
-               <font>
-                  <Font name="Eras Bold ITC" size="49.0" />
-               </font>
-               <padding>
-                  <Insets left="40.0" top="10.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Label>
-            <Label prefHeight="25.0" prefWidth="105.0" text="VEÍCULOS" textFill="#f83639">
-               <font>
-                  <Font name="Eras Bold ITC" size="20.0" />
-               </font>
-               <padding>
-                  <Insets top="37.0" />
-               </padding>
-            </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="450.0" top="20.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@img/racing.png" />
-               </image>
-            </ImageView>
-         </children>
-      </HBox>
       <Label layoutX="316.0" layoutY="109.0" text="CADASTRO DE CLIENTE" textFill="WHITE">
          <font>
             <Font name="Eras Bold ITC" size="20.0" />
          </font>
       </Label>
-      <Line endX="142.0" endY="-1.0" layoutX="416.0" layoutY="133.0" startX="-100.0" stroke="#f83639" strokeWidth="2.0" />
+      <Line endX="142.0" endY="-1.0" layoutX="412.0" layoutY="133.0" startX="-100.0" stroke="#f83639" strokeWidth="2.0" />
       <Button fx:id="AddCli" layoutX="125.0" layoutY="401.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #f83639;" text="Salvar" textFill="WHITE">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
@@ -96,7 +65,7 @@
             <Font name="Eras Demi ITC" size="15.0" />
          </font>
       </Label>
-      <Button onAction="#fecharModal" layoutX="217.0" layoutY="401.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: black;" text="Voltar" textFill="WHITE">
+      <Button layoutX="217.0" layoutY="401.0" mnemonicParsing="false" onAction="#fecharModal" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: black;" text="Voltar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -104,5 +73,36 @@
             <Font size="15.0" />
          </font>
       </Button>
+      <HBox prefHeight="77.0" prefWidth="883.0" style="-fx-background-color: black;">
+         <children>
+            <Label prefHeight="70.0" prefWidth="1040.0" text="TiMotors" textFill="WHITE">
+               <font>
+                  <Font name="Eras Bold ITC" size="49.0" />
+               </font>
+               <padding>
+                  <Insets left="40.0" top="10.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <Label prefHeight="62.0" prefWidth="907.0" text="VEÍCULOS" textFill="#f83639">
+               <font>
+                  <Font name="Eras Bold ITC" size="20.0" />
+               </font>
+               <padding>
+                  <Insets top="37.0" />
+               </padding>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="397.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="450.0" top="20.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@img/racing.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

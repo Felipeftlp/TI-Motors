@@ -17,11 +17,14 @@ import io.github.cdimascio.dotenv.Dotenv;
  * @author felip
  */
 public class FabricaConexao {
-    private static final Dotenv dotenv = Dotenv.load();
+    // private static final Dotenv dotenv = Dotenv.load();
     
-    private static final String USER = dotenv.get("DB_USER");
-    private static final String PASS = dotenv.get("DB_PASS");
-    private static final String URL  = dotenv.get("DB_URL");
+    // private static final String USER = dotenv.get("DB_USER");
+    // private static final String PASS = dotenv.get("DB_PASS");
+    // private static final String URL  = dotenv.get("DB_URL");
+    private static final String USER = "root";
+    private static final String PASS = "admin123";
+    private static final String URL  = "jdbc:mysql://127.0.0.1:3306/tiMotors";
     
        public static Connection getConnection() {
             try {
