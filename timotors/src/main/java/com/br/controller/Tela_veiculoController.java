@@ -87,9 +87,7 @@ public class Tela_veiculoController implements Initializable {
         ArrayList<Veiculo> veiculos = veicDao.buscarTodos();
         System.out.println("carregando dados----" + veiculos.size());
 
-        //comando para passar para javaFx
         ObservableList<Veiculo> itensveiculosFX = FXCollections.observableArrayList(veiculos);
-        // Jogar na tabela.
         TabelaVeiculo.setItems(itensveiculosFX);
     }
 
@@ -106,9 +104,6 @@ public class Tela_veiculoController implements Initializable {
         stage.show();
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         carregarDadosTabela();
@@ -131,7 +126,7 @@ public class Tela_veiculoController implements Initializable {
 
                 Cadastro_veiculoController controller = loader.getController();
 
-                controller.getTxtMarca().setText(veiculo.getMarca()); // set no formulário
+                controller.getTxtMarca().setText(veiculo.getMarca());
                 controller.getTxtAno().setText(veiculo.getAno());
                 controller.getTxtModelo().setText(veiculo.getModelo());
                 controller.getTxtCor().setText(veiculo.getCor());
@@ -157,6 +152,9 @@ public class Tela_veiculoController implements Initializable {
                 erroAlert.setContentText("Selecione um veículo para remover");
                 erroAlert.showAndWait();
             } else {
+                Alert erroAlert = new Alert(Alert.AlertType.INFORMATION);
+                erroAlert.setContentText("Veículo removido com sucesso");
+                erroAlert.showAndWait();
                 dao.delete(veiculo.getId());
                 carregarDadosTabela();
             }

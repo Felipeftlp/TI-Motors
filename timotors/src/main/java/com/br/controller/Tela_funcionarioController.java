@@ -161,6 +161,9 @@ public class Tela_funcionarioController implements Initializable {
                 erroAlert.setContentText("Selecione um funcionário para remover");
                 erroAlert.showAndWait();
             } else {
+                Alert succesAlert = new Alert(Alert.AlertType.INFORMATION);
+                succesAlert.setContentText("Funcionário removido com sucesso");
+                succesAlert.showAndWait();
                 dao.delete(funcionario.getId());
                 carregarDadosTabela();
             }

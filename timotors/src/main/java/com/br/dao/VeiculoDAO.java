@@ -37,8 +37,6 @@ public class VeiculoDAO {
             resultado = ps.executeQuery();
 
             while (resultado.next()) {
-                //Antes a gente estava imprimindo.
-                // Agora estamos guardando no arrayList
                 Veiculo objeto = new Veiculo();
                 objeto.setId(resultado.getInt("id_veiculo"));
                 objeto.setMarca(resultado.getString("marca"));
@@ -47,7 +45,6 @@ public class VeiculoDAO {
                 objeto.setCor(resultado.getString("cor"));
                 objeto.setPreco(resultado.getString("preco"));
                 
-                // Conversão de String para EstadoVeiculo
                 String estadoString = resultado.getString("estado");
                 try {
                     if (estadoString != null) {
@@ -56,8 +53,7 @@ public class VeiculoDAO {
                     }
                 } catch (IllegalArgumentException e) {
                     System.err.println("Estado inválido encontrado: " + estadoString);
-                    // Definir um estado padrão ou lidar com o erro
-                    objeto.setEstado(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+                    objeto.setEstado(EstadoVeiculo.NOVO);
                 }
                 
                 lista.add(objeto);
@@ -90,7 +86,6 @@ public class VeiculoDAO {
             objeto.setCor(resultado.getString("cor"));
             objeto.setPreco(resultado.getString("preco"));
             
-            // Conversão de String para EstadoVeiculo
             String estadoString = resultado.getString("estado");
             try {
                 if (estadoString != null) {
@@ -99,8 +94,7 @@ public class VeiculoDAO {
                 }
             } catch (IllegalArgumentException e) {
                 System.err.println("Estado inválido encontrado: " + estadoString);
-                // Definir um estado padrão ou lidar com o erro
-                objeto.setEstado(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+                objeto.setEstado(EstadoVeiculo.NOVO);
             }
             
         } catch (SQLException e) {

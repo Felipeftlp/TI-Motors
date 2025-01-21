@@ -86,18 +86,11 @@ public class Cadastro_veiculoController implements Initializable {
                 veiculo.setId(idVeiculo);
                 dao.update(veiculo);
     
-                Alert alerta = new Alert(AlertType.CONFIRMATION);
-                alerta.setTitle("Atualização de veículo");
-                alerta.setHeaderText("Atualização de veículo");
-                alerta.setContentText("veículo atualizado com sucesso!!");
-                           
-                alerta.showAndWait();
-    
                 fecharModal();
             } else {
                 dao.create(veiculo);
     
-                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                Alert alerta = new Alert(AlertType.INFORMATION);
                 alerta.setTitle("Cadastro de veículo");
                 alerta.setHeaderText("Cadastro de veículo");
                 alerta.setContentText("veículo cadastrado com sucesso!!");

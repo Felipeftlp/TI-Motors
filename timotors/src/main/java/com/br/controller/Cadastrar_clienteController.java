@@ -86,18 +86,11 @@ public class Cadastrar_clienteController implements Initializable {
                 cliente.setId(idCliente);
                 dao.update(cliente);
                 
-                Alert alerta = new Alert(AlertType.CONFIRMATION);
-                alerta.setTitle("Atualização de cliente");
-                alerta.setHeaderText("Atualização de cliente");
-                alerta.setContentText("Cliente atualizado com sucesso!!");
-                           
-                alerta.showAndWait();
-                
                 fecharModal();
             } else {
                 dao.create(cliente); 
                 
-                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                Alert alerta = new Alert(AlertType.INFORMATION);
                 alerta.setTitle("Cadastro de cliente");
                 alerta.setHeaderText("Cadastro de cliente");
                 alerta.setContentText("Cliente cadastrado com sucesso!!");

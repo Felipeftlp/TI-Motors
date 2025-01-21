@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
  *
  * @author felip
  */
-public class Funcionario extends Pessoa implements Salario{
+public class Funcionario extends Pessoa implements MetricasEmpresa {
     private Cargo cargo;
     private double salario;
     private int anosNaEmpresa;
@@ -47,7 +47,6 @@ public class Funcionario extends Pessoa implements Salario{
         this.salario = CalcularSalario(cargo, anosNaEmpresa);
     }
 
-    // Sobrecarga para definir o salário diretamente
     public void setSalario(String salario) {
         this.salario = Double.parseDouble(salario);
     }
@@ -60,7 +59,6 @@ public class Funcionario extends Pessoa implements Salario{
         this.anosNaEmpresa = CalcularAnosNaEmpresa(dataAdmissao);
     }
 
-    // Sobrecarga para definir anos de experiência diretamente
     public void setAnosNaEmpresa(int anosNaEmpresa) {
         this.anosNaEmpresa = anosNaEmpresa;
     }
@@ -75,9 +73,8 @@ public class Funcionario extends Pessoa implements Salario{
 
     @Override
     public double CalcularSalario(Cargo cargo, int anosNaEmpresa) {
-        double salarioBase = 3000.00f; // Definindo um valor base para o salário
+        double salarioBase = 3000.00f; 
 
-        // Ajuste do salário com base no cargo
         switch (cargo) {
             case ANALISTA:
                 salarioBase += 1000;
@@ -93,7 +90,6 @@ public class Funcionario extends Pessoa implements Salario{
                 break;
         }
 
-        // Ajuste do salário com base nos anos de experiência
         salarioBase += anosNaEmpresa * 200;
 
         return salarioBase;
@@ -107,7 +103,6 @@ public class Funcionario extends Pessoa implements Salario{
         return (int) tempoNaEmpresa;
     }
 
-    // Método toString
     @Override
     public String toString() {
         return "Funcionario{" +

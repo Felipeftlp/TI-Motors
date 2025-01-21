@@ -130,7 +130,7 @@ public class Tela_clienteController implements Initializable {
 
                 Cadastrar_clienteController controller = loader.getController();
 
-                controller.getTxtNome().setText(cliente.getNome()); // set no formulário
+                controller.getTxtNome().setText(cliente.getNome());
                 controller.getTxtCpf().setText(cliente.getCpf());
                 controller.getTxtTelefone().setText(cliente.getTelefone());
                 controller.getTxtEmail().setText(cliente.getEmail());
@@ -156,6 +156,9 @@ public class Tela_clienteController implements Initializable {
                 erroAlert.setContentText("Selecione um cliente para remover");
                 erroAlert.showAndWait();
             } else {
+                Alert succesAlert = new Alert(Alert.AlertType.INFORMATION);
+                succesAlert.setContentText("Cliente removido com sucesso");
+                succesAlert.showAndWait();
                 dao.delete(cliente.getId());
                 carregarDadosTabela();
             }

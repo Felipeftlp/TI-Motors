@@ -24,7 +24,6 @@ public class FuncionarioDAO {
     public ArrayList<Funcionario> buscarTodos(){
         String sql = "SELECT * FROM funcionario";
         
-        // Responsável em guardar o resultado
         ResultSet resultado;
 
         ArrayList<Funcionario> lista = new ArrayList<>();
@@ -38,8 +37,7 @@ public class FuncionarioDAO {
             resultado = ps.executeQuery();
 
             while (resultado.next()) {
-                //Antes a gente estava imprimindo.
-                // Agora estamos guardando no arrayList
+
                 Funcionario objeto = new Funcionario();
                 objeto.setId(resultado.getInt("id_funcionario"));
                 objeto.setNome(resultado.getString("nome"));
@@ -49,7 +47,6 @@ public class FuncionarioDAO {
                 objeto.setSalario(resultado.getString("salario"));
                 objeto.setAnosNaEmpresa(resultado.getInt("anosNaEmpresa"));
 
-                // Conversão de String para EstadoVeiculo
                 String dataAdmissaoString = resultado.getString("dataAdmissao");
                 String cargoString = resultado.getString("cargo");
                 try {
@@ -62,8 +59,7 @@ public class FuncionarioDAO {
                     }
                 } catch (IllegalArgumentException e) {
                     System.err.println("Estado inválido encontrado: " + cargoString);
-                    // Definir um estado padrão ou lidar com o erro
-                    objeto.setCargo(Cargo.VENDEDOR); // Exemplo de estado padrão
+                    objeto.setCargo(Cargo.VENDEDOR);
                 }
 
                 lista.add(objeto);
@@ -97,7 +93,6 @@ public class FuncionarioDAO {
             objeto.setSalario(resultado.getString("salario"));
             objeto.setAnosNaEmpresa(resultado.getInt("anosNaEmpresa"));
 
-            // Conversão de String para EstadoVeiculo
             String dataAdmissaoString = resultado.getString("dataAdmissao");
             String cargoString = resultado.getString("cargo");
             try {
@@ -110,8 +105,7 @@ public class FuncionarioDAO {
                 }
             } catch (IllegalArgumentException e) {
                 System.err.println("Estado inválido encontrado: " + cargoString);
-                // Definir um estado padrão ou lidar com o erro
-                objeto.setCargo(Cargo.VENDEDOR); // Exemplo de estado padrão
+                objeto.setCargo(Cargo.VENDEDOR);
             }        
                 
         } catch (SQLException e) {

@@ -89,19 +89,12 @@ public class Cadastro_funcionarioController implements Initializable {
             if (update) {
                 funcionario.setId(idFuncionario);
                 dao.update(funcionario);
-    
-                Alert alerta = new Alert(AlertType.CONFIRMATION);
-                alerta.setTitle("Atualização de funcionário");
-                alerta.setHeaderText("Atualização de funcionário");
-                alerta.setContentText("Funcionário atualizado com sucesso!!");
-                           
-                alerta.showAndWait();
-    
+
                 fecharModal();
             } else {
                 dao.create(funcionario);
     
-                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                Alert alerta = new Alert(AlertType.INFORMATION);
                 alerta.setTitle("Cadastro de funcionário");
                 alerta.setHeaderText("Cadastro de funcionário");
                 alerta.setContentText("funcionário cadastrado com sucesso!!");

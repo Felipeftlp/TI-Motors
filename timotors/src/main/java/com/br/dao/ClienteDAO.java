@@ -22,7 +22,6 @@ public class ClienteDAO {
     public ArrayList<Cliente> buscarTodos(){
         String sql = "SELECT * FROM cliente";
         
-        // Responsável em guardar o resultado
         ResultSet resultado;
 
         ArrayList<Cliente> lista = new ArrayList<>();
@@ -36,8 +35,7 @@ public class ClienteDAO {
             resultado = ps.executeQuery();
 
             while (resultado.next()) {
-                //Antes a gente estava imprimindo.
-                // Agora estamos guardando no arrayList
+
                 Cliente objeto = new Cliente();
                 objeto.setId(resultado.getInt("id_cliente"));
                 objeto.setNome(resultado.getString("nome"));
@@ -54,8 +52,7 @@ public class ClienteDAO {
                     }
                 } catch (IllegalArgumentException e) {
                     System.err.println("Estado inválido encontrado: " + interesseString);
-                    // Definir um estado padrão ou lidar com o erro
-                    objeto.setInteresse(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+                    objeto.setInteresse(EstadoVeiculo.NOVO);
                 }
                 
                 lista.add(objeto);
@@ -96,8 +93,7 @@ public class ClienteDAO {
                 }
             } catch (IllegalArgumentException e) {
                 System.err.println("Estado inválido encontrado: " + interesseString);
-                // Definir um estado padrão ou lidar com o erro
-                objeto.setInteresse(EstadoVeiculo.NOVO); // Exemplo de estado padrão
+                objeto.setInteresse(EstadoVeiculo.NOVO); 
             }
                 
         } catch (SQLException e) {
@@ -120,9 +116,8 @@ public class ClienteDAO {
                     + " (?, ?, ?, ?, ?, ?)";
 
             Connection conn = FabricaConexao.getConnection();
-            //revisor DE  SQL
             PreparedStatement ps = conn.prepareStatement(comando);
-            // substituindo as ?
+            
             ps.setString(1, objeto.getNome());
             ps.setString(2, objeto.getCpf());
             ps.setString(3, objeto.getTelefone());

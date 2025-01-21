@@ -59,7 +59,7 @@
          </image>
       </ImageView>
       <ComboBox fx:id="comboBoxInteresse" layoutX="125.0" layoutY="347.0" prefHeight="30.0" prefWidth="150.0" />
-      <TextField layoutX="300.0" layoutY="347.0" prefHeight="30.0" prefWidth="150.0" />
+      <TextField fx:id="txtEndereco" layoutX="300.0" layoutY="347.0" prefHeight="30.0" prefWidth="150.0" />
       <Label layoutX="300.0" layoutY="321.0" text="Endereço" textFill="WHITE">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
