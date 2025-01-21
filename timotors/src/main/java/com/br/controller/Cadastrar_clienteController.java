@@ -15,6 +15,8 @@ import com.br.model.EstadoVeiculo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -54,6 +56,7 @@ public class Cadastrar_clienteController implements Initializable {
     @FXML
     @SuppressWarnings("unused")
     private void cadastrarCliente(ActionEvent event) {
+
         String nome = txtNome.getText();
         String CPF = txtCpf.getText();
         String Telefone = txtTelefone.getText();
@@ -71,12 +74,38 @@ public class Cadastrar_clienteController implements Initializable {
 
         ClienteDAO dao = new ClienteDAO();
 
-        if (update) {
-            cliente.setId(idCliente);
-            dao.update(cliente);
+        if (nome.equals("") || CPF.equals("") || Telefone.equals("") || Email.equals("") || Endereco.equals("") || Interesse == null) {
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("Campos pendentes");
+            alerta.setHeaderText("Campos pendentes");
+            alerta.setContentText("Preencha todos os campos antes de prosseguir!");
+                           
+            alerta.showAndWait();
         } else {
-            dao.create(cliente);
-            limparDadosFormulario();
+            if (update) {
+                cliente.setId(idCliente);
+                dao.update(cliente);
+                
+                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                alerta.setTitle("Atualização de cliente");
+                alerta.setHeaderText("Atualização de cliente");
+                alerta.setContentText("Cliente atualizado com sucesso!!");
+                           
+                alerta.showAndWait();
+                
+                fecharModal();
+            } else {
+                dao.create(cliente); 
+                
+                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                alerta.setTitle("Cadastro de cliente");
+                alerta.setHeaderText("Cadastro de cliente");
+                alerta.setContentText("Cliente cadastrado com sucesso!!");
+    
+                alerta.showAndWait();
+    
+                limparDadosFormulario();
+            }
         }
     }
 

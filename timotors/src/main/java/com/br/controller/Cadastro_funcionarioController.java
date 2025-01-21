@@ -16,6 +16,8 @@ import com.br.model.Funcionario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -76,12 +78,38 @@ public class Cadastro_funcionarioController implements Initializable {
         
         FuncionarioDAO dao = new FuncionarioDAO();
                
-        if(update){
-            funcionario.setId(idFuncionario);
-            dao.update(funcionario);
-        }else{
-            dao.create(funcionario);
-            limparDadosFormulario();
+        if (nome.equals("") || CPF.equals("") || Telefone.equals("") || Email.equals("") || DataAdmissao == null || Cargo == null) {
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("Campos pendentes");
+            alerta.setHeaderText("Campos pendentes");
+            alerta.setContentText("Preencha todos os campos antes de prosseguir!");
+                           
+            alerta.showAndWait();
+        } else {
+            if (update) {
+                funcionario.setId(idFuncionario);
+                dao.update(funcionario);
+    
+                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                alerta.setTitle("Atualização de funcionário");
+                alerta.setHeaderText("Atualização de funcionário");
+                alerta.setContentText("Funcionário atualizado com sucesso!!");
+                           
+                alerta.showAndWait();
+    
+                fecharModal();
+            } else {
+                dao.create(funcionario);
+    
+                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                alerta.setTitle("Cadastro de funcionário");
+                alerta.setHeaderText("Cadastro de funcionário");
+                alerta.setContentText("funcionário cadastrado com sucesso!!");
+    
+                alerta.showAndWait();
+    
+                limparDadosFormulario();
+            }
         }
     }
     

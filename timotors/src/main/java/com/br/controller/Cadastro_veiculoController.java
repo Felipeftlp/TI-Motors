@@ -15,6 +15,8 @@ import com.br.model.Veiculo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -55,7 +57,7 @@ public class Cadastro_veiculoController implements Initializable {
     @FXML
     @SuppressWarnings("unused")
     private void cadastrarVeiculo(ActionEvent event){
-        String marca =txtMarca.getText();
+        String marca = txtMarca.getText();
         String modelo = txtModelo.getText();
         String ano = txtAno.getText();
         String cor = txtCor.getText();
@@ -72,12 +74,38 @@ public class Cadastro_veiculoController implements Initializable {
         
         VeiculoDAO dao = new VeiculoDAO();
                
-        if(update){
-            veiculo.setId(idVeiculo);
-            dao.update(veiculo);
-        }else{
-            dao.create(veiculo);
-            limparDadosFormulario();
+        if (marca.equals("") || modelo.equals("") || ano.equals("") || cor.equals("") || preco.equals("") || estado == null) {
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("Campos pendentes");
+            alerta.setHeaderText("Campos pendentes");
+            alerta.setContentText("Preencha todos os campos antes de prosseguir!");
+                           
+            alerta.showAndWait();
+        } else {
+            if (update) {
+                veiculo.setId(idVeiculo);
+                dao.update(veiculo);
+    
+                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                alerta.setTitle("Atualização de veículo");
+                alerta.setHeaderText("Atualização de veículo");
+                alerta.setContentText("veículo atualizado com sucesso!!");
+                           
+                alerta.showAndWait();
+    
+                fecharModal();
+            } else {
+                dao.create(veiculo);
+    
+                Alert alerta = new Alert(AlertType.CONFIRMATION);
+                alerta.setTitle("Cadastro de veículo");
+                alerta.setHeaderText("Cadastro de veículo");
+                alerta.setContentText("veículo cadastrado com sucesso!!");
+    
+                alerta.showAndWait();
+    
+                limparDadosFormulario();
+            }
         }
     }
     
