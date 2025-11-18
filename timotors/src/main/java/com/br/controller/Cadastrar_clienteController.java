@@ -79,7 +79,7 @@ public class Cadastrar_clienteController implements Initializable {
             alerta.setTitle("Campos pendentes");
             alerta.setHeaderText("Campos pendentes");
             alerta.setContentText("Preencha todos os campos antes de prosseguir!");
-                           
+                            
             alerta.showAndWait();
         } else {
             if (update) {

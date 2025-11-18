@@ -24,6 +24,7 @@ public class TiMotors extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("TI-Motors");
         stage.show();
     }
 

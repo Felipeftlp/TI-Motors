@@ -67,6 +67,9 @@ public class Tela_funcionarioController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> colunaDataAdmissao;
+    
+    @FXML
+    private TableColumn<?, ?> colunaComissao;
 
     @FXML
     private ImageView imagemEditar;
@@ -84,6 +87,7 @@ public class Tela_funcionarioController implements Initializable {
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
         colunaSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+        colunaComissao.setCellValueFactory(new PropertyValueFactory<>("comissao"));
         colunaDataAdmissao.setCellValueFactory(new PropertyValueFactory<>("dataAdmissao"));
 
 

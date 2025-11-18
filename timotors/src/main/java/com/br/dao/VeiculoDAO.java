@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.br.model.EstadoVeiculo;
+import com.br.model.StatusVeiculo;
 import com.br.model.Veiculo;
 
 /**
@@ -56,6 +57,19 @@ public class VeiculoDAO {
                     objeto.setEstado(EstadoVeiculo.NOVO);
                 }
                 
+                String statusString = resultado.getString("status");
+                try {
+                    if (statusString != null) {
+                        StatusVeiculo status = StatusVeiculo.valueOf(statusString.toUpperCase());
+                        objeto.setStatus(status);
+                    } else {
+                        objeto.setStatus(StatusVeiculo.DISPONIVEL);
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Status inválido encontrado: " + statusString);
+                    objeto.setStatus(StatusVeiculo.DISPONIVEL);
+                }
+                
                 lista.add(objeto);
             }
         } catch (SQLException e) {
@@ -97,6 +111,19 @@ public class VeiculoDAO {
                 objeto.setEstado(EstadoVeiculo.NOVO);
             }
             
+            String statusString = resultado.getString("status");
+            try {
+                if (statusString != null) {
+                    StatusVeiculo status = StatusVeiculo.valueOf(statusString.toUpperCase());
+                    objeto.setStatus(status);
+                } else {
+                    objeto.setStatus(StatusVeiculo.DISPONIVEL);
+                }
+            } catch (IllegalArgumentException e) {
+                System.err.println("Status inválido encontrado: " + statusString);
+                objeto.setStatus(StatusVeiculo.DISPONIVEL);
+            }
+            
         } catch (SQLException e) {
         } finally {
             FabricaConexao.fecharConexao(resultado);
@@ -113,8 +140,8 @@ public class VeiculoDAO {
     public boolean create(Veiculo objeto) {
 
         try {
-            String comando = "INSERT INTO veiculo (marca,modelo,ano,preco,cor,estado) VALUES"
-                    + " (?, ?, ?, ?, ?, ?)";
+            String comando = "INSERT INTO veiculo (marca,modelo,ano,preco,cor,estado,status) VALUES"
+                    + " (?, ?, ?, ?, ?, ?, ?)";
 
             Connection conn = FabricaConexao.getConnection();
             //revisor DE  SQL
@@ -126,6 +153,7 @@ public class VeiculoDAO {
             ps.setString(4, objeto.getPreco());
             ps.setString(5, objeto.getCor());
             ps.setString(6, objeto.getEstado().name());
+            ps.setString(7, objeto.getStatus() != null ? objeto.getStatus().name() : StatusVeiculo.DISPONIVEL.name());
 
             //inserindo no banco.
             int linhasAfetadas = ps.executeUpdate();
@@ -143,11 +171,12 @@ public class VeiculoDAO {
 
     public boolean update(Veiculo veiculo) {
 
-        String sql = "UPDATE veiculo SET marca = ?, modelo = ?, ano = ?, preco = ?, cor=?, estado=?"
+        String sql = "UPDATE veiculo SET marca = ?, modelo = ?, ano = ?, preco = ?, cor=?, estado=?, status=?"
                 + "WHERE veiculo.id_veiculo = ?";
 
+        Connection conn = null;
         try {
-            Connection conn = FabricaConexao.getConnection();
+            conn = FabricaConexao.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, veiculo.getMarca());
             ps.setString(2, veiculo.getModelo());
@@ -155,13 +184,19 @@ public class VeiculoDAO {
             ps.setString(4, veiculo.getPreco());
             ps.setString(5, veiculo.getCor());
             ps.setString(6, veiculo.getEstado().name());
-            ps.setInt(7, veiculo.getId());
+            ps.setString(7, veiculo.getStatus() != null ? veiculo.getStatus().name() : StatusVeiculo.DISPONIVEL.name());
+            ps.setInt(8, veiculo.getId());
 
             int linhasAfetadas = ps.executeUpdate();
+            FabricaConexao.fecharConexao(conn);
             if (linhasAfetadas > 0) {
                 return true;
             }
         } catch (SQLException e) {
+            if (conn != null) {
+                FabricaConexao.fecharConexao(conn);
+            }
+            e.printStackTrace();
         }
         return false;
     }

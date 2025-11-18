@@ -31,8 +31,9 @@
             <TableColumn fx:id="colunaCPF" prefWidth="99.0" text="CPF" />
             <TableColumn fx:id="colunaTelefone" prefWidth="103.0" text="Telefone" />
             <TableColumn fx:id="colunaEmail" prefWidth="120.0" text="Email" />
-            <TableColumn fx:id="colunaSalario" prefWidth="88.0" text="Salario" />
             <TableColumn fx:id="colunaCargo" prefWidth="79.0" text="Cargo" />
+            <TableColumn fx:id="colunaSalario" prefWidth="88.0" text="Salario" />
+            <TableColumn fx:id="colunaComissao" prefWidth="88.0" text="Comissão" />
             <TableColumn fx:id="colunaDataAdmissao" prefWidth="158.0" text="Data de admissão" />
         </columns>
       </TableView>

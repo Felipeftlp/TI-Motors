@@ -18,6 +18,7 @@ public class Veiculo {
     private String cor;
     private String preco;
     private EstadoVeiculo estado;
+    private StatusVeiculo status;
 
     public Veiculo() {
     }
@@ -88,6 +89,14 @@ public class Veiculo {
         this.estado = estado;
     }
 
+    public StatusVeiculo getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusVeiculo status) {
+        this.status = status;
+    }
+
     // Método toString
     @Override
     public String toString() {
@@ -96,9 +105,9 @@ public class Veiculo {
                 ", marca='" + marca + '\'' +
                 ", ano='" + ano + '\'' +
                 ", modelo='" + modelo + '\'' +
-                ", cor='" + cor + '\'' +
                 ", preco='" + preco + '\'' +
                 ", estado=" + estado +
+                ", status=" + status +
                 '}';
     }
 }

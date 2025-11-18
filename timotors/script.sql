@@ -9,7 +9,8 @@ CREATE TABLE veiculo (
     ano INT NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
     cor VARCHAR(50) NOT NULL,
-    estado ENUM('USADO', 'SEMINOVO', 'NOVO') NOT NULL
+    estado ENUM('USADO', 'SEMINOVO', 'NOVO') NOT NULL,
+    status ENUM('DISPONIVEL', 'VENDIDO', 'RESERVADO') DEFAULT 'DISPONIVEL'
 );
 
 CREATE TABLE cliente (
@@ -29,6 +30,7 @@ CREATE TABLE funcionario (
     telefone VARCHAR(11) NOT NULL,
     email VARCHAR(100) NOT NULL,
     salario DECIMAL(10, 2) NOT NULL,
+    comissao DECIMAL(10, 2) DEFAULT 0.00,
     anosNaEmpresa INT NOT NULL,
     dataAdmissao DATE NOT NULL,
     cargo ENUM('ANALISTA', 'GERENTE', 'DIRETOR', 'VENDEDOR') NOT NULL

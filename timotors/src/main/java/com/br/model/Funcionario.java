@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 public class Funcionario extends Pessoa implements MetricasEmpresa {
     private Cargo cargo;
     private double salario;
+    private double comissao;
     private int anosNaEmpresa;
     private LocalDate dataAdmissao;
 
@@ -69,6 +70,14 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
 
     public void setDataAdmissao(LocalDate dataAdmissao) {
         this.dataAdmissao = dataAdmissao;
+    }
+
+    public double getComissao() {
+        return comissao;
+    }
+
+    public void setComissao(double comissao) {
+        this.comissao = comissao;
     }
 
     @Override
