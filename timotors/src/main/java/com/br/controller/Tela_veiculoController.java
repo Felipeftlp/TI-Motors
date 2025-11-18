@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import com.br.dao.VeiculoDAO;
 import com.br.model.EstadoVeiculo;
+import com.br.model.StatusVeiculo;
 import com.br.model.Veiculo;
 
 import javafx.collections.FXCollections;
@@ -26,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -67,10 +69,16 @@ public class Tela_veiculoController implements Initializable {
     private TableColumn<Veiculo, String> ColunaPreco;
     
     @FXML
+    private TableColumn<Veiculo, StatusVeiculo> ColunaStatus;
+    
+    @FXML
     private ImageView imagemEditar;
 
     @FXML
     private ImageView imagemRemover;
+    
+    @FXML
+    private Button btnVender;
 
     @FXML
     public void carregarDadosTabela() {
@@ -82,6 +90,7 @@ public class Tela_veiculoController implements Initializable {
         ColunaCor.setCellValueFactory(new PropertyValueFactory<>("cor"));
         ColunaEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         ColunaPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        ColunaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         VeiculoDAO veicDao = new VeiculoDAO();
         ArrayList<Veiculo> veiculos = veicDao.buscarTodos();
@@ -157,6 +166,38 @@ public class Tela_veiculoController implements Initializable {
                 erroAlert.showAndWait();
                 dao.delete(veiculo.getId());
                 carregarDadosTabela();
+            }
+        });
+        
+        btnVender.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+            Veiculo veiculo = TabelaVeiculo.getSelectionModel().getSelectedItem();
+
+            if (veiculo == null) {
+                Alert erroAlert = new Alert(Alert.AlertType.ERROR);
+                erroAlert.setContentText("Selecione um veículo para vender");
+                erroAlert.showAndWait();
+            } else if (veiculo.getStatus() == StatusVeiculo.VENDIDO) {
+                Alert erroAlert = new Alert(Alert.AlertType.ERROR);
+                erroAlert.setContentText("Este veículo já foi vendido");
+                erroAlert.showAndWait();
+            } else {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/com/br/Vender_veiculo.fxml"));
+                try {
+                    loader.load();
+                } catch (IOException ex) {
+                    Logger.getLogger(Tela_veiculoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                Vender_veiculoController controller = loader.getController();
+                controller.setVeiculo(veiculo);
+
+                Parent parent = loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(parent));
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setTitle("Vender Veículo");
+                stage.show();
             }
         });
     }  

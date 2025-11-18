@@ -45,6 +45,11 @@ public class FuncionarioDAO {
                 objeto.setEmail(resultado.getString("email"));
                 objeto.setTelefone(resultado.getString("telefone"));
                 objeto.setSalario(resultado.getString("salario"));
+                double comissao = resultado.getDouble("comissao");
+                if (resultado.wasNull()) {
+                    comissao = 0.0;
+                }
+                objeto.setComissao(comissao);
                 objeto.setAnosNaEmpresa(resultado.getInt("anosNaEmpresa"));
 
                 String dataAdmissaoString = resultado.getString("dataAdmissao");
@@ -91,6 +96,11 @@ public class FuncionarioDAO {
             objeto.setEmail(resultado.getString("email"));
             objeto.setTelefone(resultado.getString("telefone"));
             objeto.setSalario(resultado.getString("salario"));
+            double comissao = resultado.getDouble("comissao");
+            if (resultado.wasNull()) {
+                comissao = 0.0;
+            }
+            objeto.setComissao(comissao);
             objeto.setAnosNaEmpresa(resultado.getInt("anosNaEmpresa"));
 
             String dataAdmissaoString = resultado.getString("dataAdmissao");
@@ -124,8 +134,8 @@ public class FuncionarioDAO {
     public boolean create(Funcionario objeto){
        
         try{
-            String comando = "INSERT INTO funcionario (nome,cpf,telefone,email,salario,anosNaEmpresa,dataAdmissao,cargo) VALUES"
-                    + " (?, ?, ?, ?, ?, ?, ?, ?)";
+            String comando = "INSERT INTO funcionario (nome,cpf,telefone,email,salario,comissao,anosNaEmpresa,dataAdmissao,cargo) VALUES"
+                    + " (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             Connection conn = FabricaConexao.getConnection();
             //revisor DE  SQL
@@ -136,9 +146,10 @@ public class FuncionarioDAO {
             ps.setString(3, objeto.getTelefone());
             ps.setString(4, objeto.getEmail());
             ps.setDouble(5, objeto.getSalario());
-            ps.setInt(6, objeto.getAnosNaEmpresa());
-            ps.setDate(7, Date.valueOf(objeto.getDataAdmissao()));
-            ps.setString(8, objeto.getCargo().name());
+            ps.setDouble(6, objeto.getComissao());
+            ps.setInt(7, objeto.getAnosNaEmpresa());
+            ps.setDate(8, Date.valueOf(objeto.getDataAdmissao()));
+            ps.setString(9, objeto.getCargo().name());
 
             //inserindo no banco.
             int linhasAfetadas = ps.executeUpdate();
@@ -157,7 +168,7 @@ public class FuncionarioDAO {
 
     public boolean update(Funcionario funcionario){
      
-        String sql = "UPDATE funcionario SET nome = ?, cpf = ?, telefone = ?, email = ?, salario = ?, anosNaEmpresa = ?, dataAdmissao = ?, cargo = ?"
+        String sql = "UPDATE funcionario SET nome = ?, cpf = ?, telefone = ?, email = ?, salario = ?, comissao = ?, anosNaEmpresa = ?, dataAdmissao = ?, cargo = ?"
                 + "WHERE funcionario.id_funcionario = ?";
         
         try { 
@@ -168,10 +179,11 @@ public class FuncionarioDAO {
             ps.setString(3, funcionario.getTelefone() );
             ps.setString(4, funcionario.getEmail());
             ps.setDouble(5, funcionario.getSalario());
-            ps.setInt(6, funcionario.getAnosNaEmpresa());
-            ps.setDate(7, Date.valueOf(funcionario.getDataAdmissao()));
-            ps.setString(8, funcionario.getCargo().name());
-            ps.setInt(9, funcionario.getId());
+            ps.setDouble(6, funcionario.getComissao());
+            ps.setInt(7, funcionario.getAnosNaEmpresa());
+            ps.setDate(8, Date.valueOf(funcionario.getDataAdmissao()));
+            ps.setString(9, funcionario.getCargo().name());
+            ps.setInt(10, funcionario.getId());
             
             int linhasAfetadas = ps.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -201,5 +213,31 @@ public class FuncionarioDAO {
         }
         return false;
 
+    }
+    
+    public boolean atualizarComissao(Integer idFuncionario, double valorComissao) {
+        if (idFuncionario == null || idFuncionario < 0) {
+            return false;
+        }
+        String sql = "UPDATE funcionario SET comissao = comissao + ? WHERE funcionario.id_funcionario = ?";
+        Connection conn = null;
+        try {
+            conn = FabricaConexao.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDouble(1, valorComissao);
+            ps.setInt(2, idFuncionario);
+            
+            int linhasAfetadas = ps.executeUpdate();
+            FabricaConexao.fecharConexao(conn);
+            if (linhasAfetadas > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            if (conn != null) {
+                FabricaConexao.fecharConexao(conn);
+            }
+            e.printStackTrace();
+        }
+        return false;
     }
 }

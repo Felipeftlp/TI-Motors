@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import com.br.dao.VeiculoDAO;
 import com.br.model.EstadoVeiculo;
+import com.br.model.StatusVeiculo;
 import com.br.model.Veiculo;
 
 import javafx.event.ActionEvent;
@@ -71,6 +72,10 @@ public class Cadastro_veiculoController implements Initializable {
         veiculo.setCor(cor);
         veiculo.setEstado(estado);
         veiculo.setPreco(preco);
+        // Se for novo veículo, status padrão é DISPONIVEL
+        if (!update) {
+            veiculo.setStatus(StatusVeiculo.DISPONIVEL);
+        }
         
         VeiculoDAO dao = new VeiculoDAO();
                
