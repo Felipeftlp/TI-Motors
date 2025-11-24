@@ -13,16 +13,24 @@ import java.time.temporal.ChronoUnit;
  * @author felip
  */
 public class Funcionario extends Pessoa implements MetricasEmpresa {
+    //@ nullable
     private Cargo cargo;
     private double salario;
     private double comissao;
-    private int anosNaEmpresa;
+    
+
+    //@ public invariant anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+    private /*@ spec_public @*/ int anosNaEmpresa;
+    
+    //@ nullable
     private LocalDate dataAdmissao;
 
+    //@ ensures anosNaEmpresa == 0;
     public Funcionario() {
         super();
+        this.anosNaEmpresa = 0;
     }
-
+    //@ requires anosNaEmpresa >= 0 && anosNaEmpresa < 100;
     public Funcionario(int id, String nome, String cpf, String telefone, String email, Cargo cargo, 
                        double salario, int anosNaEmpresa, LocalDate dataAdmissao) {
         super(id, nome, cpf, telefone, email);
@@ -32,6 +40,7 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         this.dataAdmissao = dataAdmissao;
     }
 
+    /*@ pure nullable @*/
     public Cargo getCargo() {
         return cargo;
     }
@@ -40,6 +49,7 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         this.cargo = cargo;
     }
 
+    /*@ pure @*/
     public double getSalario() {
         return salario;
     }
@@ -52,18 +62,24 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         this.salario = Double.parseDouble(salario);
     }
 
+    /*@ pure @*/
     public int getAnosNaEmpresa() {
         return anosNaEmpresa;
     }
-
+    
+    //@ ensures anosNaEmpresa >= 0 && anosNaEmpresa < 100;
     public void setAnosNaEmpresa() {
-        this.anosNaEmpresa = CalcularAnosNaEmpresa(dataAdmissao);
+        int resultado = CalcularAnosNaEmpresa(dataAdmissao);
+        this.anosNaEmpresa = resultado;
     }
 
+    //@ requires anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+    //@ ensures this.anosNaEmpresa == anosNaEmpresa;
     public void setAnosNaEmpresa(int anosNaEmpresa) {
         this.anosNaEmpresa = anosNaEmpresa;
     }
 
+    /*@ pure nullable @*/
     public LocalDate getDataAdmissao() {
         return dataAdmissao;
     }
@@ -72,6 +88,7 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         this.dataAdmissao = dataAdmissao;
     }
 
+    /*@ pure @*/
     public double getComissao() {
         return comissao;
     }
@@ -81,37 +98,46 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
     }
 
     @Override
-    public double CalcularSalario(Cargo cargo, int anosNaEmpresa) {
+    public double CalcularSalario(/*@ nullable @*/ Cargo cargo, int anosNaEmpresa) {
         double salarioBase = 3000.00f; 
-
-        switch (cargo) {
-            case ANALISTA:
-                salarioBase += 1000;
-                break;
-            case GERENTE:
-                salarioBase += 3000;
-                break;
-            case DIRETOR:
-                salarioBase += 5000;
-                break;
-            case VENDEDOR:
-                salarioBase += 500;
-                break;
+        if (cargo != null) {
+            switch (cargo) {
+                case ANALISTA:
+                    salarioBase += 1000;
+                    break;
+                case GERENTE:
+                    salarioBase += 3000;
+                    break;
+                case DIRETOR:
+                    salarioBase += 5000;
+                    break;
+                case VENDEDOR:
+                    salarioBase += 500;
+                    break;
+            }
         }
-
-        salarioBase += anosNaEmpresa * 200;
+        salarioBase += (long) anosNaEmpresa * 200;
 
         return salarioBase;
     }
 
+    /*@ also
+      @ ensures \result >= 0 && \result < 100;
+      @*/
     @Override
-    public int CalcularAnosNaEmpresa(LocalDate dataAdmissao) {
+    public int CalcularAnosNaEmpresa(/*@ nullable @*/LocalDate dataAdmissao) {
+        //@ assume anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+        if (dataAdmissao == null) {
+            return 0; 
+        }
         
-        double tempoNaEmpresa = ChronoUnit.YEARS.between(dataAdmissao, LocalDate.now());
+        long tempo = ChronoUnit.YEARS.between(dataAdmissao, LocalDate.now());
+        
+        if (tempo < 0) return 0;
+        if (tempo >= 100) return 99; 
 
-        return (int) tempoNaEmpresa;
+        return (int) tempo;
     }
-
     @Override
     public String toString() {
         return "Funcionario{" +

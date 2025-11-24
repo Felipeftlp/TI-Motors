@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #3C4039;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Vender_veiculoController">
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="700.0" style="-fx-background-color: #3C4039;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.controller.Vender_veiculoController">
    <children>
       <HBox prefHeight="77.0" prefWidth="700.0" style="-fx-background-color: black;">
          <children>
@@ -51,22 +52,50 @@
          <font>
             <Font name="Eras Bold ITC" size="20.0" />
          </font></Label>
-      <Label layoutX="120.0" layoutY="180.0" text="Cliente:" textFill="WHITE">
+         
+      <Label layoutX="120.0" layoutY="160.0" text="Cliente:" textFill="WHITE">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font></Label>
-      <ComboBox fx:id="comboBoxCliente" layoutX="120.0" layoutY="205.0" prefHeight="30.0" prefWidth="200.0" />
-      <Label layoutX="380.0" layoutY="180.0" text="Funcionário:" textFill="WHITE">
+      <ComboBox fx:id="comboBoxCliente" layoutX="120.0" layoutY="185.0" prefHeight="30.0" prefWidth="200.0" />
+      
+      <Label layoutX="380.0" layoutY="160.0" text="Funcionário:" textFill="WHITE">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font></Label>
-      <ComboBox fx:id="comboBoxFuncionario" layoutX="380.0" layoutY="205.0" prefHeight="30.0" prefWidth="200.0" />
-      <Label layoutX="120.0" layoutY="260.0" text="Informações do Veículo:" textFill="WHITE">
+      <ComboBox fx:id="comboBoxFuncionario" layoutX="380.0" layoutY="185.0" prefHeight="30.0" prefWidth="200.0" />
+      
+      <Label layoutX="120.0" layoutY="230.0" text="Informações do Veículo:" textFill="WHITE">
          <font>
             <Font name="Eras Demi ITC" size="15.0" />
          </font></Label>
-      <TextField fx:id="txtInfoVeiculo" layoutX="120.0" layoutY="285.0" prefHeight="60.0" prefWidth="460.0" editable="false" style="-fx-background-color: #2C2C2C; -fx-text-fill: WHITE;" />
-      <Button fx:id="btnVender" layoutX="200.0" layoutY="380.0" mnemonicParsing="false" onAction="#efetuarVenda" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #4CAF50;" text="Confirmar" textFill="WHITE">
+      <TextField fx:id="txtInfoVeiculo" layoutX="120.0" layoutY="255.0" prefHeight="50.0" prefWidth="460.0" editable="false" style="-fx-background-color: #2C2C2C; -fx-text-fill: WHITE;" />
+
+      <Line endX="360.0" layoutX="220.0" layoutY="325.0" startX="-100.0" stroke="#777777" />
+      
+      <CheckBox fx:id="chkFinanciamento" layoutX="120.0" layoutY="340.0" mnemonicParsing="false" onAction="#alternarFinanciamento" text="Realizar Financiamento" textFill="WHITE">
+         <font>
+            <Font name="Eras Demi ITC" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </CheckBox>
+
+      <Label layoutX="120.0" layoutY="375.0" text="Valor Entrada (R$):" textFill="WHITE">
+         <font>
+            <Font name="Eras Demi ITC" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEntrada" disable="true" layoutX="120.0" layoutY="400.0" prefHeight="30.0" prefWidth="150.0" promptText="0.00" />
+
+      <Label layoutX="300.0" layoutY="375.0" text="Parcelas:" textFill="WHITE">
+         <font>
+            <Font name="Eras Demi ITC" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboBoxParcelas" disable="true" layoutX="300.0" layoutY="400.0" prefHeight="30.0" prefWidth="100.0" promptText="12x" />
+      <Button fx:id="btnVender" layoutX="200.0" layoutY="470.0" mnemonicParsing="false" onAction="#efetuarVenda" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #4CAF50;" text="Confirmar" textFill="WHITE">
          <font>
             <Font name="Eras Demi ITC" size="14.0" />
          </font>
@@ -74,7 +103,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="340.0" layoutY="380.0" mnemonicParsing="false" onAction="#fecharModal" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: black;" text="Cancelar" textFill="WHITE">
+      <Button layoutX="340.0" layoutY="470.0" mnemonicParsing="false" onAction="#fecharModal" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: black;" text="Cancelar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -84,4 +113,3 @@
       </Button>
    </children>
 </AnchorPane>
-
