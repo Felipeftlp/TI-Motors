@@ -53,10 +53,52 @@ public class Cadastrar_clienteController implements Initializable {
 
     private int idCliente;
 
+    /*@
+      @ requires nome != null && cpf != null && telefone != null && email != null && endereco != null;
+      @ ensures \result == (!nome.equals("") && !cpf.equals("") && !telefone.equals("") && !email.equals("") && !endereco.equals("") && interesse != null);
+      @ pure
+      @*/
+    public boolean validarCamposObrigatorios(String nome, String cpf, String telefone, 
+                                            String email, String endereco, EstadoVeiculo interesse) {
+        return !nome.equals("") && !cpf.equals("") && !telefone.equals("") 
+               && !email.equals("") && !endereco.equals("") && interesse != null;
+    }
+
+    /*@
+      @ requires nome != null && cpf != null && telefone != null && email != null && endereco != null && interesse != null;
+      @ ensures \result != null;
+      @*/
+    private Cliente criarCliente(String nome, String cpf, String telefone, 
+                                 String email, EstadoVeiculo interesse, String endereco) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setCpf(cpf);
+        cliente.setTelefone(telefone);
+        cliente.setEmail(email);
+        cliente.setInteresse(interesse);
+        cliente.setEndereco(endereco);
+        return cliente;
+    }
+
+    private void exibirAlertaCamposPendentes() {
+        Alert alerta = new Alert(AlertType.ERROR);
+        alerta.setTitle("Campos pendentes");
+        alerta.setHeaderText("Campos pendentes");
+        alerta.setContentText("Preencha todos os campos antes de prosseguir!");
+        alerta.showAndWait();
+    }
+
+    private void exibirAlertaSucesso() {
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle("Cadastro de cliente");
+        alerta.setHeaderText("Cadastro de cliente");
+        alerta.setContentText("Cliente cadastrado com sucesso!!");
+        alerta.showAndWait();
+    }
+
     @FXML
     @SuppressWarnings("unused")
     private void cadastrarCliente(ActionEvent event) {
-
         String nome = txtNome.getText();
         String CPF = txtCpf.getText();
         String Telefone = txtTelefone.getText();
@@ -64,41 +106,22 @@ public class Cadastrar_clienteController implements Initializable {
         EstadoVeiculo Interesse = comboBoxInteresse.getValue();
         String Endereco = txtEndereco.getText();
 
-        Cliente cliente = new Cliente();
-        cliente.setNome(nome);
-        cliente.setCpf(CPF);
-        cliente.setTelefone(Telefone);
-        cliente.setEmail(Email);
-        cliente.setInteresse(Interesse);
-        cliente.setEndereco(Endereco);
+        if (!validarCamposObrigatorios(nome, CPF, Telefone, Email, Endereco, Interesse)) {
+            exibirAlertaCamposPendentes();
+            return;
+        }
 
+        Cliente cliente = criarCliente(nome, CPF, Telefone, Email, Interesse, Endereco);
         ClienteDAO dao = new ClienteDAO();
 
-        if (nome.equals("") || CPF.equals("") || Telefone.equals("") || Email.equals("") || Endereco.equals("") || Interesse == null) {
-            Alert alerta = new Alert(AlertType.ERROR);
-            alerta.setTitle("Campos pendentes");
-            alerta.setHeaderText("Campos pendentes");
-            alerta.setContentText("Preencha todos os campos antes de prosseguir!");
-                            
-            alerta.showAndWait();
+        if (update) {
+            cliente.setId(idCliente);
+            dao.update(cliente);
+            fecharModal();
         } else {
-            if (update) {
-                cliente.setId(idCliente);
-                dao.update(cliente);
-                
-                fecharModal();
-            } else {
-                dao.create(cliente); 
-                
-                Alert alerta = new Alert(AlertType.INFORMATION);
-                alerta.setTitle("Cadastro de cliente");
-                alerta.setHeaderText("Cadastro de cliente");
-                alerta.setContentText("Cliente cadastrado com sucesso!!");
-    
-                alerta.showAndWait();
-    
-                limparDadosFormulario();
-            }
+            dao.create(cliente);
+            exibirAlertaSucesso();
+            limparDadosFormulario();
         }
     }
 

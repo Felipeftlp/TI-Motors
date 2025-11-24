@@ -1,22 +1,18 @@
-### Relatório de Contribuição ao Projeto
+Comando rodar o jml no pc de kaio:
+~/Downloads/openjml-ubuntu-22.04-21-0.18/openjml -esc \
+-classpath "$(cat '/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/classpath.txt')" \
+-sourcepath "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java" \
+--dir "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/model" \
+"/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/controller/Cadastrar_clienteController.java"
 
-**Projeto:** TiMotors
+opção com check ao inves de esc:
+~/Downloads/openjml-ubuntu-22.04-21-0.18/openjml -check \
+-classpath "$(cat '/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/classpath.txt')" \
+-sourcepath "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java" \
+--dir "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/model" \
+"/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/controller/Cadastrar_clienteController.java"
 
-**Integrantes:** Kaio Eduardo, Felipe Freitas
+tem que mudar o classpath.txt tbm para o jml encontrar os arquivo javafx, se não da um bocado de erro
 
-Este documento visa detalhar as contribuições individuais de cada membro da equipe no desenvolvimento do projeto utilizando JavaFX, SceneBuilder e MySQL.
-
-**Kaio Eduardo**
-
-Kaio Eduardo foi responsável por uma parte significativa do desenvolvimento do código relacionado à lógica de negócios e persistência de dados. Suas principais contribuições incluem:
-- Implementação das classes principais, com foco na aplicação de princípios de herança e polimorfismo.
-- Desenvolvimento dos DAOs (Data Access Objects) para realizar a conexão com o banco de dados MySQL, garantindo que as operações de CRUD fossem realizadas de maneira eficiente e segura.
-- Integração do sistema com o banco de dados, assegurando a consistência e integridade dos dados.
-
-**Felipe Freitas**
-
-Felipe Freitas contribuiu de forma significativa para a parte visual e de interação do projeto. Suas principais responsabilidades foram:
-- Criação dos arquivos FXML, que definem a estrutura e design das telas da aplicação.
-- Desenvolvimento do design das interfaces, garantindo uma experiência de usuário intuitiva e visualmente agradável.
-- Implementação de alertas e mensagens de erro para melhorar a usabilidade e robustez do sistema.
-- Correção de bugs relacionados ao layout e funcionalidade das telas, assegurando que a aplicação operasse sem problemas.
+o arquivo module-info.java foi renomeado para poder rodar o jml (não sei pq tava dando erro), para voltar ao q era antes, bastar rodar o comando mudando os path:
+mv "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/module-info.java.bak" "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/module-info.java"

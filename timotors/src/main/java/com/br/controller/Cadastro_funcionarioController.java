@@ -56,6 +56,51 @@ public class Cadastro_funcionarioController implements Initializable {
     
     private int idFuncionario;
 
+    /*@
+      @ requires nome != null && cpf != null && telefone != null && email != null;
+      @ ensures \result == (!nome.equals("") && !cpf.equals("") && !telefone.equals("") && !email.equals("") && dataAdmissao != null && cargo != null);
+      @ pure
+      @*/
+    public boolean validarCamposObrigatorios(String nome, String cpf, String telefone, 
+                                             String email, LocalDate dataAdmissao, Cargo cargo) {
+        return !nome.equals("") && !cpf.equals("") && !telefone.equals("") 
+               && !email.equals("") && dataAdmissao != null && cargo != null;
+    }
+
+    /*@
+      @ requires nome != null && cpf != null && telefone != null && email != null && cargo != null && dataAdmissao != null;
+      @ ensures \result != null;
+      @*/
+    private Funcionario criarFuncionario(String nome, String cpf, String telefone, 
+                                         String email, Cargo cargo, LocalDate dataAdmissao) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setTelefone(telefone);
+        funcionario.setEmail(email);
+        funcionario.setCargo(cargo);
+        funcionario.setDataAdmissao(dataAdmissao);
+        funcionario.setAnosNaEmpresa();
+        funcionario.setSalario();
+        return funcionario;
+    }
+
+    private void exibirAlertaCamposPendentes() {
+        Alert alerta = new Alert(AlertType.ERROR);
+        alerta.setTitle("Campos pendentes");
+        alerta.setHeaderText("Campos pendentes");
+        alerta.setContentText("Preencha todos os campos antes de prosseguir!");
+        alerta.showAndWait();
+    }
+
+    private void exibirAlertaSucesso() {
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle("Cadastro de funcionário");
+        alerta.setHeaderText("Cadastro de funcionário");
+        alerta.setContentText("funcionário cadastrado com sucesso!!");
+        alerta.showAndWait();
+    }
+
     @FXML
     @SuppressWarnings("unused")
     private void cadastrarFuncionario(ActionEvent event){
@@ -66,43 +111,22 @@ public class Cadastro_funcionarioController implements Initializable {
         Cargo Cargo = comboBoxCargo.getValue();
         LocalDate DataAdmissao = dataAdmissao.getValue();
         
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome(nome);
-        funcionario.setCpf(CPF);
-        funcionario.setTelefone(Telefone);
-        funcionario.setEmail(Email);
-        funcionario.setCargo(Cargo);
-        funcionario.setDataAdmissao(DataAdmissao);
-        funcionario.setAnosNaEmpresa();
-        funcionario.setSalario();
-        
-        FuncionarioDAO dao = new FuncionarioDAO();
-               
-        if (nome.equals("") || CPF.equals("") || Telefone.equals("") || Email.equals("") || DataAdmissao == null || Cargo == null) {
-            Alert alerta = new Alert(AlertType.ERROR);
-            alerta.setTitle("Campos pendentes");
-            alerta.setHeaderText("Campos pendentes");
-            alerta.setContentText("Preencha todos os campos antes de prosseguir!");
-                           
-            alerta.showAndWait();
-        } else {
-            if (update) {
-                funcionario.setId(idFuncionario);
-                dao.update(funcionario);
+        if (!validarCamposObrigatorios(nome, CPF, Telefone, Email, DataAdmissao, Cargo)) {
+            exibirAlertaCamposPendentes();
+            return;
+        }
 
-                fecharModal();
-            } else {
-                dao.create(funcionario);
-    
-                Alert alerta = new Alert(AlertType.INFORMATION);
-                alerta.setTitle("Cadastro de funcionário");
-                alerta.setHeaderText("Cadastro de funcionário");
-                alerta.setContentText("funcionário cadastrado com sucesso!!");
-    
-                alerta.showAndWait();
-    
-                limparDadosFormulario();
-            }
+        Funcionario funcionario = criarFuncionario(nome, CPF, Telefone, Email, Cargo, DataAdmissao);
+        FuncionarioDAO dao = new FuncionarioDAO();
+
+        if (update) {
+            funcionario.setId(idFuncionario);
+            dao.update(funcionario);
+            fecharModal();
+        } else {
+            dao.create(funcionario);
+            exibirAlertaSucesso();
+            limparDadosFormulario();
         }
     }
     

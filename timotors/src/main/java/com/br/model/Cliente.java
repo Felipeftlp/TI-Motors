@@ -10,21 +10,25 @@ package com.br.model;
  * @author felip
  */
 public class Cliente extends Pessoa{
-    
+    //@ nullable
     private EstadoVeiculo interesse;
+    //@ nullable
     private String endereco;
 
     public Cliente() {
         super();
     }
 
+    //@ requires endereco != null;
+    //@ requires nome != null && cpf != null && telefone != null && email != null;
     public Cliente(int id, String nome, String cpf, String telefone, String email, EstadoVeiculo interesse, 
-                   String endereco) {
+                   /*@ non_null @*/ String endereco) {
         super(id, nome, cpf, telefone, email);
         this.interesse = interesse;
         this.endereco = endereco;
     }
 
+    /*@ pure nullable @*/
     public EstadoVeiculo getInteresse() {
         return interesse;
     }
@@ -33,6 +37,7 @@ public class Cliente extends Pessoa{
         this.interesse = interesse;
     }
 
+    /*@ pure nullable @*/
     public String getEndereco() {
         return endereco;
     }
@@ -40,7 +45,6 @@ public class Cliente extends Pessoa{
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-
     @Override
     public String toString() {
         return "Cliente{" +

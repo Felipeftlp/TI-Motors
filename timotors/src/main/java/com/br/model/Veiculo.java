@@ -10,14 +10,20 @@ package com.br.model;
  * @author felip
  */
 public class Veiculo {
-    
     private int id;
+    //@ nullable
     private String marca;
+    //@ nullable
     private String ano;
+    //@ nullable
     private String modelo;
+    //@ nullable
     private String cor;
+    //@ nullable
     private String preco;
+    //@ nullable
     private EstadoVeiculo estado;
+    //@ nullable
     private StatusVeiculo status;
 
     public Veiculo() {
@@ -32,6 +38,7 @@ public class Veiculo {
         this.estado = estado;
     }
 
+    /*@ pure @*/
     public int getId() {
         return id;
     }
@@ -40,6 +47,7 @@ public class Veiculo {
         this.id = id;
     }
 
+    /*@ pure nullable @*/
     public String getMarca() {
         return marca;
     }
@@ -48,6 +56,7 @@ public class Veiculo {
         this.marca = marca;
     }
 
+    /*@ pure nullable @*/
     public String getAno() {
         return ano;
     }
@@ -56,6 +65,7 @@ public class Veiculo {
         this.ano = ano;
     }
 
+    /*@ pure nullable @*/
     public String getModelo() {
         return modelo;
     }
@@ -64,6 +74,7 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
+    /*@ pure nullable @*/
     public String getCor() {
         return cor;
     }
@@ -72,6 +83,7 @@ public class Veiculo {
         this.cor = cor;
     }
 
+    /*@ pure nullable @*/
     public String getPreco() {
         return preco;
     }
@@ -79,8 +91,8 @@ public class Veiculo {
     public void setPreco(String preco) {
         this.preco = preco;
     }
-    
-    
+
+    /*@ pure nullable @*/
     public EstadoVeiculo getEstado() {
         return estado;
     }
@@ -89,6 +101,7 @@ public class Veiculo {
         this.estado = estado;
     }
 
+    /*@ pure nullable @*/
     public StatusVeiculo getStatus() {
         return status;
     }
@@ -98,6 +111,7 @@ public class Veiculo {
     }
 
     // Método toString
+    /*@ pure nullable @*/
     @Override
     public String toString() {
         return "Veiculo{" +
