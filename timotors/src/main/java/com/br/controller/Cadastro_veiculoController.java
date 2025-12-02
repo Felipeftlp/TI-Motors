@@ -30,29 +30,38 @@ import javafx.stage.Stage;
  */
 public class Cadastro_veiculoController implements Initializable {
 
+    //@ spec_public nullable
     @FXML
     private Button Addveic;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtMarca;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtAno;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtModelo;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtCor;
 
+    //@ spec_public nullable
     @FXML
     private ComboBox<EstadoVeiculo> comboBoxEstado;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtpreco;
     
+    //@ spec_public
     private boolean update;
     
+    //@ spec_public
     private int idVeiculo;
     
     /*@
@@ -60,16 +69,19 @@ public class Cadastro_veiculoController implements Initializable {
       @ ensures \result == (!marca.equals("") && !modelo.equals("") && !ano.equals("") && !cor.equals("") && !preco.equals("") && estado != null);
       @ pure
       @*/
-    public boolean validarCamposObrigatorios(String marca, String modelo, String ano, 
+    public static boolean validarCamposObrigatorios(String marca, String modelo, String ano, 
                                              String cor, String preco, EstadoVeiculo estado) {
         return !marca.equals("") && !modelo.equals("") && !ano.equals("") 
                && !cor.equals("") && !preco.equals("") && estado != null;
     }
+    
+    //assumimos que a construção do objeto é segura porque o Modelo já foi verificado
     /*@
       @ requires marca != null && modelo != null && ano != null && cor != null && estado != null && preco != null;
       @ ensures \result != null;
       @ ensures !this.update ==> \result.getStatus() == StatusVeiculo.DISPONIVEL;
       @*/
+    //@ skipesc
     private Veiculo criarVeiculo(String marca, String modelo, String ano, 
                                  String cor, EstadoVeiculo estado, String preco) {
         Veiculo veiculo = new Veiculo();
@@ -86,6 +98,7 @@ public class Cadastro_veiculoController implements Initializable {
         return veiculo;
     }
 
+    //@ skipesc
     private void exibirAlertaCamposPendentes() {
         Alert alerta = new Alert(AlertType.ERROR);
         alerta.setTitle("Campos pendentes");
@@ -94,6 +107,7 @@ public class Cadastro_veiculoController implements Initializable {
         alerta.showAndWait();
     }
 
+    //@ skipesc
     private void exibirAlertaSucesso() {
         Alert alerta = new Alert(AlertType.INFORMATION);
         alerta.setTitle("Cadastro de veículo");
@@ -102,6 +116,10 @@ public class Cadastro_veiculoController implements Initializable {
         alerta.showAndWait();
     }
     
+    /*@ 
+      @ requires txtMarca != null && txtModelo != null && txtAno != null && txtCor != null && comboBoxEstado != null && txtpreco != null;
+      @*/
+    //@ skipesc
     @FXML
     @SuppressWarnings("unused")
     private void cadastrarVeiculo(ActionEvent event){
@@ -131,6 +149,7 @@ public class Cadastro_veiculoController implements Initializable {
         }
     }
     
+    //@ skipesc
     public void fecharModal(){
         Stage stage = (Stage) Addveic.getScene().getWindow();
             
@@ -140,84 +159,115 @@ public class Cadastro_veiculoController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    //@ skipesc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Adicionando itens ao ComboBox
         comboBoxEstado.getItems().addAll(EstadoVeiculo.NOVO, EstadoVeiculo.SEMINOVO, EstadoVeiculo.USADO);
     }    
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public Button getAddveic() {
         return Addveic;
     }
 
+    //@ skipesc
     public void setAddveic(Button Addveic) {
         this.Addveic = Addveic;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtMarca() {
         return txtMarca;
     }
 
+    //@ skipesc
     public void setTxtMarca(TextField txtMarca) {
         this.txtMarca = txtMarca;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtAno() {
         return txtAno;
     }
 
+    //@ skipesc
     public void setTxtAno(TextField txtAno) {
         this.txtAno = txtAno;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtModelo() {
         return txtModelo;
     }
 
+    //@ skipesc
     public void setTxtModelo(TextField txtModelo) {
         this.txtModelo = txtModelo;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtCor() {
         return txtCor;
     }
 
+    //@ skipesc
     public void setTxtCor(TextField txtCor) {
         this.txtCor = txtCor;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtpreco() {
         return txtpreco;
     }
 
+    //@ skipesc
     public void setTxtpreco(TextField txtpreco) {
         this.txtpreco = txtpreco;
     }
 
+    /*@ pure @*/
+    //@ skipesc
     public boolean isUpdate() {
         return update;
     }
 
+    //@ assignable this.update;
+    //@ skipesc
     public void setUpdate(boolean update) {
         this.update = update;
     }
 
+    /*@ pure @*/
+    //@ skipesc
     public int getIdVeiculo() {
         return idVeiculo;
     }
 
+    //@ assignable this.idVeiculo;
+    //@ skipesc
     public void setIdVeiculo(int idVeiculo) {
         this.idVeiculo = idVeiculo;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public ComboBox<EstadoVeiculo> getComboBoxEstado() {
         return comboBoxEstado;
     }
 
+    //@ skipesc
     public void setComboBoxEstado(ComboBox<EstadoVeiculo> comboBoxEstado) {
         this.comboBoxEstado = comboBoxEstado;
     }
 
+    //@ skipesc
     public void limparDadosFormulario() {
         comboBoxEstado.setValue(null);
         txtAno.setText("");

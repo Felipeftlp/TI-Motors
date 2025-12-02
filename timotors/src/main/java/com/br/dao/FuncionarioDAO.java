@@ -21,6 +21,8 @@ import com.br.model.Funcionario;
  * @author felip
  */
 public class FuncionarioDAO {
+
+    //@ skipesc
     public ArrayList<Funcionario> buscarTodos(){
         String sql = "SELECT * FROM funcionario";
         
@@ -77,6 +79,7 @@ public class FuncionarioDAO {
         return lista;
     }
 
+    //@ skipesc
     @SuppressWarnings("null")
     public Funcionario getById(Integer id) throws ClassNotFoundException {
         if (id == null || id < 0) {
@@ -131,6 +134,8 @@ public class FuncionarioDAO {
      * @param aluno
      * @return
      */
+    
+    //@ skipesc
     public boolean create(Funcionario objeto){
        
         try{
@@ -166,6 +171,7 @@ public class FuncionarioDAO {
         return false;
     }
 
+    //@ skipesc
     public boolean update(Funcionario funcionario){
      
         String sql = "UPDATE funcionario SET nome = ?, cpf = ?, telefone = ?, email = ?, salario = ?, comissao = ?, anosNaEmpresa = ?, dataAdmissao = ?, cargo = ?"
@@ -194,7 +200,7 @@ public class FuncionarioDAO {
         return false;
     }
 
-    
+    //@ skipesc
     public boolean delete(Integer id){
         if (id == null || id < 0) {
             throw new IllegalArgumentException();
@@ -214,7 +220,7 @@ public class FuncionarioDAO {
         return false;
 
     }
-    
+    //@ skipesc
     public boolean atualizarComissao(Integer idFuncionario, double valorComissao) {
         if (idFuncionario == null || idFuncionario < 0) {
             return false;

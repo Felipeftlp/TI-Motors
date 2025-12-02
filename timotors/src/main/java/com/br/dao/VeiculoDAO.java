@@ -21,6 +21,7 @@ import com.br.model.Veiculo;
  */
 public class VeiculoDAO {
 
+    //@ skipesc
     public ArrayList<Veiculo> buscarTodos() {
         String sql = "SELECT * FROM veiculo";
 
@@ -81,6 +82,7 @@ public class VeiculoDAO {
     }
 
     @SuppressWarnings("null")
+    //@ skipesc
     public Veiculo getById(Integer id) throws ClassNotFoundException {
         if (id == null || id < 0) {
             throw new IllegalArgumentException();
@@ -137,6 +139,7 @@ public class VeiculoDAO {
      * @param aluno
      * @return
      */
+    //@ skipesc
     public boolean create(Veiculo objeto) {
 
         try {
@@ -169,6 +172,7 @@ public class VeiculoDAO {
         return false;
     }
 
+    //@ skipesc
     public boolean update(Veiculo veiculo) {
 
         String sql = "UPDATE veiculo SET marca = ?, modelo = ?, ano = ?, preco = ?, cor=?, estado=?, status=?"
@@ -200,7 +204,7 @@ public class VeiculoDAO {
         }
         return false;
     }
-
+    //@ skipesc
     public boolean delete(Integer id) {
         if (id == null || id < 0) {
             throw new IllegalArgumentException();

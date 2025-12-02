@@ -19,6 +19,8 @@ import com.br.model.EstadoVeiculo;
  * @author felip
  */
 public class ClienteDAO {
+    
+    //@ skipesc
     public ArrayList<Cliente> buscarTodos(){
         String sql = "SELECT * FROM cliente";
         
@@ -64,7 +66,7 @@ public class ClienteDAO {
         
         return lista;
     }
-
+    //@ skipesc
     @SuppressWarnings("null")
     public Cliente getById(Integer id) throws ClassNotFoundException {
         if (id == null || id < 0) {
@@ -109,6 +111,7 @@ public class ClienteDAO {
      * @param aluno
      * @return
      */
+    //@ skipesc
     public boolean create(Cliente objeto){
        
         try{
@@ -139,7 +142,8 @@ public class ClienteDAO {
         
         return false;
     }
-
+    
+    //@ skipesc
     public boolean update(Cliente cliente){
      
         String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, endereco = ?, interesse = ?"
@@ -165,7 +169,7 @@ public class ClienteDAO {
         return false;
     }
 
-    
+    //@ skipesc
     public boolean delete(Integer id){
         if (id == null || id < 0) {
             throw new IllegalArgumentException();
