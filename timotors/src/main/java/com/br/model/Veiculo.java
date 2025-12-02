@@ -10,25 +10,60 @@ package com.br.model;
  * @author felip
  */
 public class Veiculo {
+    
+    //@ spec_public
     private int id;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String marca;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String ano;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String modelo;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String cor;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String preco;
-    //@ nullable
+    
+    //@ spec_public nullable
     private EstadoVeiculo estado;
-    //@ nullable
+    
+    //@ spec_public nullable
     private StatusVeiculo status;
 
+    /*@ 
+      @ ensures id == 0;
+      @ ensures marca == null;
+      @ ensures ano == null;
+      @ ensures modelo == null;
+      @ ensures cor == null;
+      @ ensures preco == null;
+      @ ensures estado == null;
+      @ ensures status == null;
+      @*/
     public Veiculo() {
+        this.id = 0;
+        this.marca = null;
+        this.ano = null;
+        this.modelo = null;
+        this.cor = null;
+        this.preco = null;
+        this.estado = null;
+        this.status = null;
     }
 
+    /*@ 
+      @ ensures this.marca == marca;
+      @ ensures this.ano == ano;
+      @ ensures this.modelo == modelo;
+      @ ensures this.cor == cor;
+      @ ensures this.preco == preco;
+      @ ensures this.estado == estado;
+      @*/
     public Veiculo(String marca, String ano, String modelo, String cor, String preco, EstadoVeiculo estado) {
         this.marca = marca;
         this.ano = ano;
@@ -43,6 +78,7 @@ public class Veiculo {
         return id;
     }
 
+    //@ assignable this.id;
     public void setId(int id) {
         this.id = id;
     }
@@ -52,6 +88,7 @@ public class Veiculo {
         return marca;
     }
 
+    //@ assignable this.marca;
     public void setMarca(String marca) {
         this.marca = marca;
     }
@@ -61,6 +98,7 @@ public class Veiculo {
         return ano;
     }
 
+    //@ assignable this.ano;
     public void setAno(String ano) {
         this.ano = ano;
     }
@@ -70,6 +108,7 @@ public class Veiculo {
         return modelo;
     }
 
+    //@ assignable this.modelo;
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
@@ -79,6 +118,7 @@ public class Veiculo {
         return cor;
     }
 
+    //@ assignable this.cor;
     public void setCor(String cor) {
         this.cor = cor;
     }
@@ -88,6 +128,7 @@ public class Veiculo {
         return preco;
     }
 
+    //@ assignable this.preco;
     public void setPreco(String preco) {
         this.preco = preco;
     }
@@ -97,6 +138,7 @@ public class Veiculo {
         return estado;
     }
 
+    //@ assignable this.estado;
     public void setEstado(EstadoVeiculo estado) {
         this.estado = estado;
     }
@@ -106,12 +148,13 @@ public class Veiculo {
         return status;
     }
 
+    //@ assignable this.status;
     public void setStatus(StatusVeiculo status) {
         this.status = status;
     }
 
     // Método toString
-    /*@ pure nullable @*/
+    //@ skipesc
     @Override
     public String toString() {
         return "Veiculo{" +

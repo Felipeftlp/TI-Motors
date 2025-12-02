@@ -1,20 +1,39 @@
 package com.br.model;
 
 public abstract class Pessoa {
+    
+    //@ spec_public
     private int id;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String nome;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String cpf;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String telefone;
-    //@ nullable
+    
+    //@ spec_public nullable
     private String email;
     
+    /*@ 
+      @ ensures nome == null;
+      @ ensures cpf == null;
+      @ ensures telefone == null;
+      @ ensures email == null;
+      @*/
     public Pessoa() {
     }
     
-    //@ requires nome != null && cpf != null && telefone != null && email != null;
+    /*@ 
+      @ requires nome != null && cpf != null && telefone != null && email != null;
+      @ ensures this.id == id;
+      @ ensures this.nome == nome;
+      @ ensures this.cpf == cpf;
+      @ ensures this.telefone == telefone;
+      @ ensures this.email == email;
+      @*/
     public Pessoa(int id, String nome, String cpf, String telefone, String email) {
         this.id = id;
         this.nome = nome;
@@ -28,6 +47,7 @@ public abstract class Pessoa {
         return id;
     }
 
+    //@ assignable this.id;
     public void setId(int id) {
         this.id = id;
     }
@@ -36,6 +56,8 @@ public abstract class Pessoa {
     public String getNome() {
         return nome;
     }
+    
+    //@ assignable this.nome;
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -45,6 +67,7 @@ public abstract class Pessoa {
         return cpf;
     }
     
+    //@ assignable this.cpf;
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
@@ -53,6 +76,8 @@ public abstract class Pessoa {
     public String getTelefone() {
         return telefone;
     }
+    
+    //@ assignable this.telefone;
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
@@ -62,8 +87,14 @@ public abstract class Pessoa {
         return email;
     }
 
+    //@ assignable this.email;
     public void setEmail(String email) {
         this.email = email;
     }
- 
+    
+    //@ skipesc
+    @Override
+    public String toString() {
+        return "Pessoa{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + ", email=" + email + '}';
+    }
 }

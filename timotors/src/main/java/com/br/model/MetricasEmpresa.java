@@ -3,7 +3,10 @@ package com.br.model;
 import java.time.LocalDate;
 
 public interface MetricasEmpresa {
-    double CalcularSalario(/*@ nullable @*/ Cargo cargo, int anosNaEmpresa);
-
+    
+    /*@ pure @*/
+    double CalcularSalario(Cargo cargo, int anosNaEmpresa);
+    
+    //@ assignable \nothing;
     int CalcularAnosNaEmpresa(/*@ nullable @*/ LocalDate dataAdmissao);
 }

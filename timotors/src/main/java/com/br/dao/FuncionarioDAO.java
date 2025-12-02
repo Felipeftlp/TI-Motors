@@ -44,7 +44,7 @@ public class FuncionarioDAO {
                 objeto.setCpf(resultado.getString("cpf"));
                 objeto.setEmail(resultado.getString("email"));
                 objeto.setTelefone(resultado.getString("telefone"));
-                objeto.setSalario(resultado.getString("salario"));
+                objeto.setSalario(resultado.getDouble("salario"));
                 double comissao = resultado.getDouble("comissao");
                 if (resultado.wasNull()) {
                     comissao = 0.0;
@@ -95,7 +95,7 @@ public class FuncionarioDAO {
             objeto.setCpf(resultado.getString("cpf"));
             objeto.setEmail(resultado.getString("email"));
             objeto.setTelefone(resultado.getString("telefone"));
-            objeto.setSalario(resultado.getString("salario"));
+            objeto.setSalario(resultado.getDouble("salario"));
             double comissao = resultado.getDouble("comissao");
             if (resultado.wasNull()) {
                 comissao = 0.0;

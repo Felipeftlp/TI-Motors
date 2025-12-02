@@ -13,24 +13,47 @@ import java.time.temporal.ChronoUnit;
  * @author felip
  */
 public class Funcionario extends Pessoa implements MetricasEmpresa {
-    //@ nullable
+
+    /*@ public invariant anosNaEmpresa >= 0 && anosNaEmpresa < 100; @*/
+    /*@ public invariant salario >= 0.00; @*/
+    /*@ public invariant cargo != null; @*/
+
+    //@ spec_public non_null
     private Cargo cargo;
+    
+    //@ spec_public
     private double salario;
+    
+    //@ spec_public
     private double comissao;
     
-
-    //@ public invariant anosNaEmpresa >= 0 && anosNaEmpresa < 100;
-    private /*@ spec_public @*/ int anosNaEmpresa;
+    //@ spec_public
+    private int anosNaEmpresa;
     
-    //@ nullable
+    //@ spec_public nullable
     private LocalDate dataAdmissao;
 
-    //@ ensures anosNaEmpresa == 0;
+    /*@ 
+      @ ensures anosNaEmpresa == 0;
+      @ ensures salario == 0.00;
+      @ ensures cargo == Cargo.VENDEDOR;
+      @*/
     public Funcionario() {
         super();
         this.anosNaEmpresa = 0;
+        this.salario = 0.00;
+        this.cargo = Cargo.VENDEDOR;
     }
-    //@ requires anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+
+    /*@ 
+      @ requires cargo != null;
+      @ requires anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+      @ requires salario >= 0.00;
+      @ ensures this.cargo == cargo;
+      @ ensures this.salario == salario;
+      @ ensures this.anosNaEmpresa == anosNaEmpresa;
+      @ ensures this.dataAdmissao == dataAdmissao;
+      @*/
     public Funcionario(int id, String nome, String cpf, String telefone, String email, Cargo cargo, 
                        double salario, int anosNaEmpresa, LocalDate dataAdmissao) {
         super(id, nome, cpf, telefone, email);
@@ -40,11 +63,16 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         this.dataAdmissao = dataAdmissao;
     }
 
-    /*@ pure nullable @*/
+    /*@ pure non_null @*/
     public Cargo getCargo() {
         return cargo;
     }
 
+    /*@ 
+      @ requires cargo != null;
+      @ assignable this.cargo;
+      @ ensures this.cargo == cargo;
+      @*/
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
@@ -54,12 +82,20 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         return salario;
     }
 
+    /*@ 
+      @ assignable this.salario;
+      @ ensures salario == \old(CalcularSalario(cargo, anosNaEmpresa));
+      @*/
     public void setSalario() {
         this.salario = CalcularSalario(cargo, anosNaEmpresa);
     }
 
-    public void setSalario(String salario) {
-        this.salario = Double.parseDouble(salario);
+    /*@ 
+      @ requires salario >= 3500.00;
+      @ assignable this.salario;
+      @*/
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
 
     /*@ pure @*/
@@ -67,14 +103,19 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         return anosNaEmpresa;
     }
     
-    //@ ensures anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+    /*@ 
+      @ assignable this.anosNaEmpresa;
+      @*/
     public void setAnosNaEmpresa() {
         int resultado = CalcularAnosNaEmpresa(dataAdmissao);
         this.anosNaEmpresa = resultado;
     }
 
-    //@ requires anosNaEmpresa >= 0 && anosNaEmpresa < 100;
-    //@ ensures this.anosNaEmpresa == anosNaEmpresa;
+    /*@ 
+      @ requires anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+      @ assignable this.anosNaEmpresa;
+      @ ensures this.anosNaEmpresa == anosNaEmpresa;
+      @*/
     public void setAnosNaEmpresa(int anosNaEmpresa) {
         this.anosNaEmpresa = anosNaEmpresa;
     }
@@ -97,9 +138,21 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
         this.comissao = comissao;
     }
 
+    /*@ also
+      @ requires cargo != null;
+      @ requires anosNaEmpresa >= 0;
+      @ ensures \result >= 3500.00; 
+      @ ensures \result == 3000.00 + (anosNaEmpresa * 200) + 
+      @         (cargo == Cargo.ANALISTA ? 1000 : 
+      @          cargo == Cargo.GERENTE ? 3000 : 
+      @          cargo == Cargo.DIRETOR ? 5000 : 
+      @          cargo == Cargo.VENDEDOR ? 500 : 0);
+      @ pure
+      @*/
     @Override
-    public double CalcularSalario(/*@ nullable @*/ Cargo cargo, int anosNaEmpresa) {
+    public double CalcularSalario(Cargo cargo, int anosNaEmpresa) {
         double salarioBase = 3000.00f; 
+        
         if (cargo != null) {
             switch (cargo) {
                 case ANALISTA:
@@ -122,22 +175,32 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
     }
 
     /*@ also
+      @ assignable \nothing;
       @ ensures \result >= 0 && \result < 100;
       @*/
     @Override
-    public int CalcularAnosNaEmpresa(/*@ nullable @*/LocalDate dataAdmissao) {
-        //@ assume anosNaEmpresa >= 0 && anosNaEmpresa < 100;
+    public int CalcularAnosNaEmpresa(/*@ nullable @*/ LocalDate dataAdmissao) {
         if (dataAdmissao == null) {
             return 0; 
         }
         
-        long tempo = ChronoUnit.YEARS.between(dataAdmissao, LocalDate.now());
+        long tempo = calcularDiferencaAnosSystem(dataAdmissao);
         
         if (tempo < 0) return 0;
         if (tempo >= 100) return 99; 
 
         return (int) tempo;
     }
+
+    /*@ private normal_behavior
+      @ assignable \nothing;
+      @*/
+    //@ skipesc
+    private long calcularDiferencaAnosSystem(LocalDate dataAdmissao) {
+        return ChronoUnit.YEARS.between(dataAdmissao, LocalDate.now());
+    }
+
+    //@ skipesc
     @Override
     public String toString() {
         return "Funcionario{" +
