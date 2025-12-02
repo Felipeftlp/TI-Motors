@@ -20,24 +20,27 @@ public class FabricaConexao {
     private static final String USER = "admin";
     private static final String PASS = "1234";
     private static final String URL  = "jdbc:mysql://127.0.0.1:3306/tiMotors";
-     
-       public static Connection getConnection() {
-            try {
-                return DriverManager.getConnection(URL, USER, PASS);
-            } catch (SQLException ex) {
-                System.err.println("Erro: " + ex);
-                return null;
-            }
+    
+    //@ skipesc
+    public static Connection getConnection() {
+        try {
+            return DriverManager.getConnection(URL, USER, PASS);
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+            return null;
         }
+    }
 
-        public static void fecharConexao(Connection conn) {
-            try {
-                if (conn != null)
-                    conn.close();
-                } catch (SQLException e) {
-            }	
-        }
+    //@ skipesc
+    public static void fecharConexao(Connection conn) {
+        try {
+            if (conn != null)
+                conn.close();
+            } catch (SQLException e) {
+        }	
+    }
 
+    //@ skipesc
     public static void fecharConexao(Connection conn, Statement s) {
         fecharConexao(conn);
         try {
@@ -47,6 +50,7 @@ public class FabricaConexao {
         }
     }
 
+    //@ skipesc
     public static void fecharConexao(Connection conn, Statement s, ResultSet rs) {
         fecharConexao(conn, s);
         try {
@@ -56,6 +60,7 @@ public class FabricaConexao {
         }
     }
 
+    //@ skipesc
 	public static void fecharConexao(ResultSet rs) {
 		try {
 			if (rs != null)

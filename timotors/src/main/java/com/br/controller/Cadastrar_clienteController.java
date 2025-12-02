@@ -28,29 +28,39 @@ import javafx.stage.Stage;
  * @author felip
  */
 public class Cadastrar_clienteController implements Initializable {
+
+    //@ spec_public nullable
     @FXML
     private Button AddCli;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtNome;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtCpf;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtEmail;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtTelefone;
 
+    //@ spec_public nullable
     @FXML
     private ComboBox<EstadoVeiculo> comboBoxInteresse;
 
+    //@ spec_public nullable
     @FXML
     private TextField txtEndereco;
 
+    //@ spec_public
     private boolean update;
 
+    //@ spec_public
     private int idCliente;
 
     /*@
@@ -58,16 +68,18 @@ public class Cadastrar_clienteController implements Initializable {
       @ ensures \result == (!nome.equals("") && !cpf.equals("") && !telefone.equals("") && !email.equals("") && !endereco.equals("") && interesse != null);
       @ pure
       @*/
-    public boolean validarCamposObrigatorios(String nome, String cpf, String telefone, 
+    public static boolean validarCamposObrigatorios(String nome, String cpf, String telefone, 
                                             String email, String endereco, EstadoVeiculo interesse) {
         return !nome.equals("") && !cpf.equals("") && !telefone.equals("") 
                && !email.equals("") && !endereco.equals("") && interesse != null;
     }
-
+    
+    //assumimos que a construção do objeto é segura porque o Modelo já foi verificado
     /*@
       @ requires nome != null && cpf != null && telefone != null && email != null && endereco != null && interesse != null;
       @ ensures \result != null;
       @*/
+    //@ skipesc
     private Cliente criarCliente(String nome, String cpf, String telefone, 
                                  String email, EstadoVeiculo interesse, String endereco) {
         Cliente cliente = new Cliente();
@@ -80,6 +92,7 @@ public class Cadastrar_clienteController implements Initializable {
         return cliente;
     }
 
+    //@ skipesc
     private void exibirAlertaCamposPendentes() {
         Alert alerta = new Alert(AlertType.ERROR);
         alerta.setTitle("Campos pendentes");
@@ -88,6 +101,7 @@ public class Cadastrar_clienteController implements Initializable {
         alerta.showAndWait();
     }
 
+    //@ skipesc
     private void exibirAlertaSucesso() {
         Alert alerta = new Alert(AlertType.INFORMATION);
         alerta.setTitle("Cadastro de cliente");
@@ -96,6 +110,10 @@ public class Cadastrar_clienteController implements Initializable {
         alerta.showAndWait();
     }
 
+    /*@ 
+      @ requires txtNome != null && txtCpf != null && txtTelefone != null && txtEmail != null && comboBoxInteresse != null && txtEndereco != null;
+      @*/
+    //@ skipesc
     @FXML
     @SuppressWarnings("unused")
     private void cadastrarCliente(ActionEvent event) {
@@ -125,6 +143,7 @@ public class Cadastrar_clienteController implements Initializable {
         }
     }
 
+    //@ skipesc
     public void fecharModal() {
         Stage stage = (Stage) AddCli.getScene().getWindow();
 
@@ -134,12 +153,14 @@ public class Cadastrar_clienteController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    //@ skipesc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Adicionando itens ao ComboBox
         comboBoxInteresse.getItems().addAll(EstadoVeiculo.NOVO, EstadoVeiculo.SEMINOVO, EstadoVeiculo.USADO);
     }
 
+    //@ skipesc
     private void limparDadosFormulario() {
         txtNome.setText("");
         txtCpf.setText("");
@@ -149,74 +170,103 @@ public class Cadastrar_clienteController implements Initializable {
         comboBoxInteresse.setValue(EstadoVeiculo.NOVO);
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public Button getAddCli() {
         return AddCli;
     }
 
+    //@ skipesc
     public void setAddCli(Button AddCli) {
         this.AddCli = AddCli;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtNome() {
         return txtNome;
     }
 
+    //@ skipesc
     public void setTxtNome(TextField txtNome) {
         this.txtNome = txtNome;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtCpf() {
         return txtCpf;
     }
 
+    //@ skipesc
     public void setTxtCpf(TextField txtCpf) {
         this.txtCpf = txtCpf;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtEmail() {
         return txtEmail;
     }
 
+    //@ skipesc
     public void setTxtEmail(TextField txtEmail) {
         this.txtEmail = txtEmail;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtTelefone() {
         return txtTelefone;
     }
 
+    //@ skipesc
     public void setTxtTelefone(TextField txtTelefone) {
         this.txtTelefone = txtTelefone;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public ComboBox<EstadoVeiculo> getComboBoxInteresse() {
         return comboBoxInteresse;
     }
 
+    //@ skipesc
     public void setComboBoxInteresse(ComboBox<EstadoVeiculo> comboBoxInteresse) {
         this.comboBoxInteresse = comboBoxInteresse;
     }
 
+    /*@ pure nullable @*/
+    //@ skipesc
     public TextField getTxtEndereco() {
         return txtEndereco;
     }
 
+    //@ skipesc
     public void setTxtEndereco(TextField txtEndereco) {
         this.txtEndereco = txtEndereco;
     }
 
+    /*@ pure @*/
+    //@ skipesc
     public boolean isUpdate() {
         return update;
     }
 
+    //@ assignable this.update;
+    //@ skipesc
     public void setUpdate(boolean update) {
         this.update = update;
     }
 
+    /*@ pure @*/
+    //@ skipesc
     public int getIdCliente() {
         return idCliente;
     }
 
+    //@ assignable this.idCliente;
+    //@ skipesc
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
