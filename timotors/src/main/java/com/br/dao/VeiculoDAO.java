@@ -21,6 +21,15 @@ import com.br.model.Veiculo;
  */
 public class VeiculoDAO {
 
+    /*@
+      @ public normal_behavior
+      @   assignable \nothing;
+      @*/
+    //@ skipesc
+    public VeiculoDAO() {
+        super();
+    }
+
     //@ skipesc
     public ArrayList<Veiculo> buscarTodos() {
         String sql = "SELECT * FROM veiculo";
@@ -176,6 +185,13 @@ public class VeiculoDAO {
         return false;
     }
 
+    /*@ 
+      @ public behavior
+      @   ensures \result == true || \result == false;
+      @   ensures veiculo.status == \old(veiculo.status);
+      @   // Como estamos pulando o corpo (skipesc), garantimos que o Java não muda.
+      @   assignable \nothing; 
+      @*/
     //@ skipesc
     public boolean update(Veiculo veiculo) {
 

@@ -22,6 +22,15 @@ import com.br.model.Funcionario;
  */
 public class FuncionarioDAO {
 
+    /*@
+      @ public normal_behavior
+      @   assignable \nothing;
+      @*/
+    //@ skipesc
+    public FuncionarioDAO() {
+        super();
+    }
+
     //@ skipesc
     public ArrayList<Funcionario> buscarTodos(){
         String sql = "SELECT * FROM funcionario";
@@ -220,6 +229,13 @@ public class FuncionarioDAO {
         return false;
 
     }
+
+    /*@ 
+      @ public behavior
+      @   ensures \result == true || \result == false;
+      @   // Garante que não altera nada nos objetos passados por parâmetro
+      @   assignable \nothing;
+      @*/
     //@ skipesc
     public boolean atualizarComissao(Integer idFuncionario, double valorComissao) {
         if (idFuncionario == null || idFuncionario < 0) {

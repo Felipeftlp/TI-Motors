@@ -79,7 +79,7 @@ public class Cadastro_veiculoController implements Initializable {
     /*@
       @ requires marca != null && modelo != null && ano != null && cor != null && estado != null && preco != null;
       @ ensures \result != null;
-      @ ensures !this.update ==> \result.getStatus() == StatusVeiculo.DISPONIVEL;
+      @ ensures !this.update ==> \result.status == StatusVeiculo.DISPONIVEL;
       @*/
     //@ skipesc
     private Veiculo criarVeiculo(String marca, String modelo, String ano, 
