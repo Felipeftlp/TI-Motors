@@ -16,30 +16,36 @@ public abstract class Pessoa {
     
     //@ spec_public nullable
     private String email;
+
+    //@ spec_public nullable
+    private String endereco;
     
     /*@ 
       @ ensures nome == null;
       @ ensures cpf == null;
       @ ensures telefone == null;
       @ ensures email == null;
+      @ ensures endereco == null;
       @*/
     public Pessoa() {
     }
     
     /*@ 
-      @ requires nome != null && cpf != null && telefone != null && email != null;
+      @ requires nome != null && cpf != null && telefone != null && email != null && endereco != null;
       @ ensures this.id == id;
       @ ensures this.nome == nome;
       @ ensures this.cpf == cpf;
       @ ensures this.telefone == telefone;
       @ ensures this.email == email;
+      @ ensures this.endereco == endereco;
       @*/
-    public Pessoa(int id, String nome, String cpf, String telefone, String email) {
+    public Pessoa(int id, String nome, String cpf, String telefone, String email, String endereco) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
+        this.endereco = endereco;
     }
 
     /*@ pure @*/
@@ -90,6 +96,16 @@ public abstract class Pessoa {
     //@ assignable this.email;
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /*@ pure nullable @*/
+    public String getEndereco() {
+        return endereco;
+    }
+
+    //@ assignable this.endereco;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
     
     //@ skipesc

@@ -13,9 +13,6 @@ public class Cliente extends Pessoa {
     
     //@ spec_public nullable
     private EstadoVeiculo interesse;
-    
-    //@ spec_public nullable
-    private String endereco;
 
     /*@ 
       @ ensures interesse == null;
@@ -24,14 +21,16 @@ public class Cliente extends Pessoa {
     public Cliente() {
         super();
         this.interesse = null;
-        this.endereco = null;
     }
 
-    //@ skipesc
+    /*@
+      @ requires interesse != null && endereco != null && endereco.length() >= 0;
+      @ ensures this.interesse == interesse;
+      @ ensures this.endereco == endereco;
+      @*/
     public Cliente(int id, String nome, String cpf, String telefone, String email, EstadoVeiculo interesse, String endereco) {
-        super(id, nome, cpf, telefone, email);
+        super(id, nome, cpf, telefone, email, endereco);
         this.interesse = interesse;
-        this.endereco = endereco;
     }
 
     /*@ pure nullable @*/
@@ -43,23 +42,12 @@ public class Cliente extends Pessoa {
     public void setInteresse(EstadoVeiculo interesse) {
         this.interesse = interesse;
     }
-
-    /*@ pure nullable @*/
-    public String getEndereco() {
-        return endereco;
-    }
-
-    //@ assignable this.endereco;
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
     
     //@ skipesc
     @Override
     public String toString() {
         return "Cliente{" +
                 "interesse='" + interesse + '\'' +
-                ", endereco='" + endereco + '\'' +
                 "} " + super.toString();
     }
 }

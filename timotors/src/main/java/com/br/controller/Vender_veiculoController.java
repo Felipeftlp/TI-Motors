@@ -20,7 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox; // Novo
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
@@ -34,34 +34,71 @@ import javafx.util.Callback;
 public class Vender_veiculoController implements Initializable {
 
     // --- Componentes da Tela (UI) ---
-    @FXML private Button btnVender;
-    @FXML private ComboBox<Cliente> comboBoxCliente;
-    @FXML private ComboBox<Funcionario> comboBoxFuncionario;
-    @FXML private TextField txtInfoVeiculo;
+    // Em JML, campos privados referenciados em especificações públicas devem ser marcados como spec_public
+    //@ public invariant TAXA_JUROS_MENSAL == 0.02;
 
-    // --- Novos Componentes Financeiros (Adicionar no FXML) ---
-    @FXML private CheckBox chkFinanciamento;
-    @FXML private TextField txtEntrada;
-    @FXML private ComboBox<Integer> comboBoxParcelas;
+    //@ spec_public nullable
+    @FXML 
+    private Button btnVender;
+    
+    //@ spec_public nullable
+    @FXML 
+    private ComboBox<Cliente> comboBoxCliente;
+    
+    //@ spec_public nullable
+    @FXML 
+    private ComboBox<Funcionario> comboBoxFuncionario;
+    
+    //@ spec_public nullable
+    @FXML 
+    private TextField txtInfoVeiculo;
 
+    //@ spec_public nullable
+    @FXML 
+    private CheckBox chkFinanciamento;
+    
+    //@ spec_public nullable
+    @FXML 
+    private TextField txtEntrada;
+    
+    //@ spec_public nullable
+    @FXML 
+    private ComboBox<Integer> comboBoxParcelas;
+
+    /*@ spec_public nullable @*/ 
     private Veiculo veiculo;
+    
+    /*@ spec_public @*/
     private static final double TAXA_JUROS_MENSAL = 0.02; // 2% ao mês
 
     /**
      * Calcula a comissão (10%).
-     * //@ requires valorVeiculo >= 0;
-     * //@ ensures \result == valorVeiculo * 0.10;
-     * //@ pure
      */
+    /*@ 
+      @ public normal_behavior
+      @   requires valorVeiculo >= 0;
+      @   ensures \result == valorVeiculo * 0.10;
+      @   ensures \result >= 0;
+      @   pure
+      @*/
     public double calcularComissao(double valorVeiculo) {
         return valorVeiculo * 0.10;
     }
 
     /**
      * Calcula a parcela usando Tabela Price (Juros Compostos).
-     * //@ requires valorVeiculo > 0 && entrada >= 0 && meses > 0;
-     * //@ pure
      */
+    /*@ 
+      @ public normal_behavior
+      @   requires valorVeiculo > 0;
+      @   requires entrada >= 0;
+      @   requires meses > 0;
+      @   // Se a entrada quita o veículo, parcela é 0
+      @   ensures (entrada >= valorVeiculo) ==> (\result == 0.0);
+      @   // Se há saldo devedor, a parcela deve ser positiva
+      @   ensures (entrada < valorVeiculo) ==> (\result > 0);
+      @   pure
+      @*/
     public double calcularParcelaPrice(double valorVeiculo, double entrada, int meses) {
         double saldoDevedor = valorVeiculo - entrada;
         
@@ -75,9 +112,25 @@ public class Vender_veiculoController implements Initializable {
     }
 
     /**
-     * Valida os dados antes de processar. Lança exceção com a mensagem de erro.
-     * //@ requires cliente != null && funcionario != null && veiculo != null;
+     * Valida os dados antes de processar.
      */
+    /*@ 
+      @ public normal_behavior
+      @   requires cliente != null;
+      @   requires funcionario != null;
+      @   requires veiculo != null;
+      @   // Se não for financiado, assumimos validação OK para entrada/parcelas neste contexto simples
+      @   requires !isFinanciado || (entrada >= 0 && parcelas != null && parcelas > 0);
+      @   assignable \nothing;
+      @
+      @ also
+      @
+      @ public exceptional_behavior
+      @   signals (IllegalArgumentException) cliente == null || funcionario == null;
+      @   signals (IllegalArgumentException) veiculo == null;
+      @   signals (IllegalArgumentException) isFinanciado && entrada < 0;
+      @   signals (IllegalArgumentException) isFinanciado && (parcelas == null || parcelas <= 0);
+      @*/
     public void validarDadosVenda(Cliente cliente, Funcionario funcionario, Veiculo veiculo, 
                                   boolean isFinanciado, double entrada, Integer parcelas) throws IllegalArgumentException {
         
@@ -89,6 +142,8 @@ public class Vender_veiculoController implements Initializable {
         }
 
         if (isFinanciado) {
+            // Nota: Double.parseDouble pode lançar exceção, idealmente o parse deve ser feito antes ou tratado.
+            // O JML foca na lógica de negócio aqui.
             double precoVeiculo = Double.parseDouble(veiculo.getPreco());
 
             if (entrada < 0) {
@@ -106,6 +161,18 @@ public class Vender_veiculoController implements Initializable {
     /**
      * Persistência: Isola o acesso ao DAO.
      */
+    /*@
+      @ public normal_behavior
+      @   requires veiculo != null;
+      @   requires funcionario != null;
+      @   requires veiculo.getStatus() != StatusVeiculo.VENDIDO; 
+      @   ensures veiculo.getStatus() == StatusVeiculo.VENDIDO;
+      @
+      @ also
+      @
+      @ public exceptional_behavior
+      @   signals (Exception) (* Falha na conexão com banco ou update retornou false *);
+      @*/
     public void persistirVenda(Veiculo veiculo, Funcionario funcionario, double comissao) throws Exception {
         // 1. Atualizar Veículo
         veiculo.setStatus(StatusVeiculo.VENDIDO);
@@ -126,6 +193,7 @@ public class Vender_veiculoController implements Initializable {
         }
     }
 
+    //@ skipesc
     @FXML
     @SuppressWarnings("unused")
     private void efetuarVenda(ActionEvent event) {
@@ -183,6 +251,7 @@ public class Vender_veiculoController implements Initializable {
     /**
      * Habilita/Desabilita campos de financiamento baseado no CheckBox
      */
+    //@ skipesc
     @FXML
     private void alternarFinanciamento() {
         if (chkFinanciamento != null) {
@@ -200,6 +269,7 @@ public class Vender_veiculoController implements Initializable {
 
     // --- Alertas Auxiliares ---
 
+    //@ skipesc
     private void mostrarAlertaErro(Stage owner, String header, String content) {
         Alert alerta = new Alert(AlertType.ERROR);
         alerta.initOwner(owner);
@@ -209,8 +279,9 @@ public class Vender_veiculoController implements Initializable {
         alerta.showAndWait();
     }
 
+    //@ skipesc
     private void mostrarAlertaSucesso(Stage owner, Cliente cliente, Funcionario funcionario, double comissao, 
-                                      boolean financiado, double valorParcela, int parcelas, double totalPago) { // Correção aqui: int parcelas
+                                      boolean financiado, double valorParcela, int parcelas, double totalPago) {
         StringBuilder sb = new StringBuilder();
         sb.append("Veículo vendido para: ").append(cliente.getNome());
         sb.append("\nVendedor: ").append(funcionario.getNome());
@@ -236,11 +307,16 @@ public class Vender_veiculoController implements Initializable {
         alerta.showAndWait();
     }
 
+    //@ skipesc
     public void fecharModal() {
         Stage stage = (Stage) btnVender.getScene().getWindow();
         stage.close();
     }
 
+    /*@ 
+      @ requires veiculo != null;
+      @ ensures this.veiculo == veiculo;
+      @*/
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
         if (veiculo != null) {
@@ -248,14 +324,15 @@ public class Vender_veiculoController implements Initializable {
         }
     }
 
+    //@ skipesc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         carregarDadosCombos();
         configurarFinanciamentoUI();
     }
     
+    //@ skipesc
     private void configurarFinanciamentoUI() {
-        // Inicializa itens do financiamento se existirem no FXML
         if (comboBoxParcelas != null) {
             comboBoxParcelas.getItems().addAll(12, 24, 36, 48, 60);
             comboBoxParcelas.setDisable(true);
@@ -264,12 +341,12 @@ public class Vender_veiculoController implements Initializable {
             txtEntrada.setDisable(true);
         }
         
-        // Listener para o CheckBox (alternativa ao onAction no FXML)
         if (chkFinanciamento != null) {
             chkFinanciamento.selectedProperty().addListener((obs, oldVal, newVal) -> alternarFinanciamento());
         }
     }
 
+    //@ skipesc
     private void carregarDadosCombos() {
         // --- CLIENTES ---
         ClienteDAO clienteDAO = new ClienteDAO();
@@ -277,8 +354,6 @@ public class Vender_veiculoController implements Initializable {
         ObservableList<Cliente> clientesFX = FXCollections.observableArrayList(clientes);
         comboBoxCliente.setItems(clientesFX);
         
-        // Configuração de Renderização (CORREÇÃO DO BUG DE EXIBIÇÃO)
-        // Usamos um Callback para garantir que tanto a lista quanto o botão mostrem o nome
         Callback<javafx.scene.control.ListView<Cliente>, ListCell<Cliente>> fabricaCelulaCliente = param -> new ListCell<Cliente>() {
             @Override
             protected void updateItem(Cliente item, boolean empty) {
@@ -291,7 +366,7 @@ public class Vender_veiculoController implements Initializable {
             }
         };
         comboBoxCliente.setCellFactory(fabricaCelulaCliente);
-        comboBoxCliente.setButtonCell(fabricaCelulaCliente.call(null)); // Aplica a mesma lógica ao botão selecionado
+        comboBoxCliente.setButtonCell(fabricaCelulaCliente.call(null));
 
         // --- FUNCIONÁRIOS ---
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
@@ -299,7 +374,6 @@ public class Vender_veiculoController implements Initializable {
         ObservableList<Funcionario> funcionariosFX = FXCollections.observableArrayList(funcionarios);
         comboBoxFuncionario.setItems(funcionariosFX);
 
-        // Configuração de Renderização
         Callback<javafx.scene.control.ListView<Funcionario>, ListCell<Funcionario>> fabricaCelulaFuncionario = param -> new ListCell<Funcionario>() {
             @Override
             protected void updateItem(Funcionario item, boolean empty) {

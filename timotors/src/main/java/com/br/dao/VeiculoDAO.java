@@ -156,7 +156,11 @@ public class VeiculoDAO {
             ps.setString(4, objeto.getPreco());
             ps.setString(5, objeto.getCor());
             ps.setString(6, objeto.getEstado().name());
-            ps.setString(7, objeto.getStatus() != null ? objeto.getStatus().name() : StatusVeiculo.DISPONIVEL.name());
+            if (objeto.getStatus() != null) {
+                ps.setString(7, objeto.getStatus().name());
+            } else {
+                ps.setString(7, StatusVeiculo.DISPONIVEL.name());
+            }
 
             //inserindo no banco.
             int linhasAfetadas = ps.executeUpdate();
@@ -188,7 +192,11 @@ public class VeiculoDAO {
             ps.setString(4, veiculo.getPreco());
             ps.setString(5, veiculo.getCor());
             ps.setString(6, veiculo.getEstado().name());
-            ps.setString(7, veiculo.getStatus() != null ? veiculo.getStatus().name() : StatusVeiculo.DISPONIVEL.name());
+            if (veiculo.getStatus() != null) {
+                ps.setString(7, veiculo.getStatus().name());
+            } else {
+                ps.setString(7, StatusVeiculo.DISPONIVEL.name());
+            }
             ps.setInt(8, veiculo.getId());
 
             int linhasAfetadas = ps.executeUpdate();

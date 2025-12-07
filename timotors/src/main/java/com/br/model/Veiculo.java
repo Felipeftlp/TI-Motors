@@ -64,13 +64,14 @@ public class Veiculo {
       @ ensures this.preco == preco;
       @ ensures this.estado == estado;
       @*/
-    public Veiculo(String marca, String ano, String modelo, String cor, String preco, EstadoVeiculo estado) {
+    public Veiculo(String marca, String ano, String modelo, String cor, String preco, EstadoVeiculo estado, StatusVeiculo status) {
         this.marca = marca;
         this.ano = ano;
         this.modelo = modelo;
         this.cor = cor;
         this.preco = preco;
         this.estado = estado;
+        this.status = status;
     }
 
     /*@ pure @*/

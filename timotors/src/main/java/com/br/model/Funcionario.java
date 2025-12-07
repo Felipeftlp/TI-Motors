@@ -54,9 +54,9 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
       @ ensures this.anosNaEmpresa == anosNaEmpresa;
       @ ensures this.dataAdmissao == dataAdmissao;
       @*/
-    public Funcionario(int id, String nome, String cpf, String telefone, String email, Cargo cargo, 
+    public Funcionario(int id, String nome, String cpf, String telefone, String email, String endereco, Cargo cargo, 
                        double salario, int anosNaEmpresa, LocalDate dataAdmissao) {
-        super(id, nome, cpf, telefone, email);
+        super(id, nome, cpf, telefone, email, endereco);
         this.cargo = cargo;
         this.salario = salario;
         this.anosNaEmpresa = anosNaEmpresa;
