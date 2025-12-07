@@ -34,3 +34,14 @@ JFX_CP="$REPO/javafx-controls/13/javafx-controls-13-linux.jar:$REPO/javafx-fxml/
 -sourcepath "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java" \
 "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/model"/*.java \
 "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/controller/Cadastrar_clienteController.java"
+
+
+# 1. Configurar variáveis de ambiente (para garantir)
+EPO="/home/kaio/.m2/repository/org/openjfx"
+JFX_CP="$REPO/javafx-controls/13/javafx-controls-13-linux.jar:$REPO/javafx-fxml/13/javafx-fxml-13-linux.jar:$REPO/javafx-base/13/javafx-base-13-linux.jar:$REPO/javafx-graphics/13/javafx-graphics-13-linux.jar"
+
+# 2. Rodar a verificação
+~/Downloads/openjml-ubuntu-22.04-21-0.18/openjml -esc -progress -timeout 240 \
+-classpath "$(cat '/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/classpath.txt'):$JFX_CP" \
+-sourcepath "/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java" \
+"/home/kaio/Documentos/ufrn/6 periodo/logica/TI-Motors/timotors/src/main/java/com/br/controller/Vender_veiculoController.java"
