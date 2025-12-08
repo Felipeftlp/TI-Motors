@@ -111,13 +111,12 @@ public class Vender_veiculoController implements Initializable {
       @ public behavior
       @   assignable \nothing;
       @
-      @   signals (IllegalArgumentException) cliente == null || funcionario == null;
-      @   signals (IllegalArgumentException) veiculo == null;
-      @
-      @   signals (IllegalArgumentException) isFinanciado && (entrada < 0 || parcelas == null || parcelas <= 0);
-      @   
-      @   signals (IllegalArgumentException) isFinanciado;
-      @
+      @   signals (IllegalArgumentException) 
+      @       (cliente == null || funcionario == null) ||
+      @       (veiculo == null) ||
+      @       (veiculo != null && veiculo.getPreco() == null) ||
+      @       (isFinanciado && (entrada < 0 || parcelas == null || parcelas <= 0));
+      @ 
       @   signals (NumberFormatException) isFinanciado; 
       @*/
     public void validarDadosVenda(Cliente cliente, Funcionario funcionario, Veiculo veiculo, 
