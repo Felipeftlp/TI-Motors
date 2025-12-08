@@ -7,6 +7,6 @@ public interface MetricasEmpresa {
     /*@ pure @*/
     double CalcularSalario(Cargo cargo, int anosNaEmpresa);
     
-    //@ assignable \nothing;
+    /*@ pure @*/
     int CalcularAnosNaEmpresa(/*@ nullable @*/ LocalDate dataAdmissao);
 }

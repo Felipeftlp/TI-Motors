@@ -147,7 +147,6 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
       @          cargo == Cargo.GERENTE ? 3000 : 
       @          cargo == Cargo.DIRETOR ? 5000 : 
       @          cargo == Cargo.VENDEDOR ? 500 : 0);
-      @ pure
       @*/
     @Override
     public double CalcularSalario(Cargo cargo, int anosNaEmpresa) {
@@ -175,7 +174,6 @@ public class Funcionario extends Pessoa implements MetricasEmpresa {
     }
 
     /*@ also
-      @ assignable \nothing;
       @ ensures \result >= 0 && \result < 100;
       @*/
     @Override
