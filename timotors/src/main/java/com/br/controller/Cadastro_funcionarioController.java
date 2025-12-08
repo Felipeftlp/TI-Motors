@@ -76,7 +76,6 @@ public class Cadastro_funcionarioController implements Initializable {
                && !email.equals("") && dataAdmissao != null && cargo != null;
     }
 
-    //assumimos que a construção do objeto é segura porque o Modelo já foi verificado
     /*@
       @ requires nome != null && cpf != null && telefone != null && email != null && cargo != null && dataAdmissao != null;
       @ ensures \result != null;

@@ -34,7 +34,6 @@ import javafx.util.Callback;
 public class Vender_veiculoController implements Initializable {
 
     // --- Componentes da Tela (UI) ---
-    // Em JML, campos privados referenciados em especificações públicas devem ser marcados como spec_public
     //@ public invariant TAXA_JUROS_MENSAL == 0.02;
 
     //@ spec_public nullable
@@ -71,9 +70,6 @@ public class Vender_veiculoController implements Initializable {
     /*@ spec_public @*/
     private static final double TAXA_JUROS_MENSAL = 0.02; // 2% ao mês
 
-    /**
-     * Calcula a comissão (10%).
-     */
     /*@ 
       @ public normal_behavior
       @   requires valorVeiculo >= 0;
@@ -85,11 +81,6 @@ public class Vender_veiculoController implements Initializable {
         return valorVeiculo * 0.10;
     }
 
-    /**
-     * Calcula a parcela usando Tabela Price.
-     * Ajuste: Verificamos pré-condições de segurança, mas removemos o 'ensures \result > 0'
-     * para evitar que o solver Z3 trave tentando resolver a equacao exponencial de Math.pow.
-     */
     /*@ 
       @ public normal_behavior
       @   requires valorVeiculo > 0;
@@ -103,52 +94,30 @@ public class Vender_veiculoController implements Initializable {
         
         if (saldoDevedor <= 0) return 0.0;
 
-        // 1. Calcula o fator exponencial
         double fator = Math.pow(1 + TAXA_JUROS_MENSAL, -meses);
         
-        // 2. Materializa o denominador
         double denominador = 1 - fator;
 
-        // 3. PROVA DE SEGURANÇA (Defensive Programming):
-        // Se o denominador for zero (erro de precisão ou juros zero), 
-        // retornamos antes da divisão acontecer.
-        // O solver vê este 'if' e entende que a linha seguinte é segura.
         if (denominador == 0) {
-            return 0.0; // Ou lançar exceção, mas métodos pure evitam side-effects
+            return 0.0;
         }
 
-        // Agora o OpenJML sabe que 'denominador' não é zero aqui.
         double valorParcela = saldoDevedor * (TAXA_JUROS_MENSAL / denominador);
         
         return valorParcela;
     }
 
-    /**
-     * Valida os dados.
-     * CORREÇÃO JML: Unificamos em 'public behavior' para evitar o timeout.
-     * Removemos a obrigação de 'sucesso' (normal_behavior) quando isFinanciado é true,
-     * pois o método pode lançar exceção se (entrada >= preco), algo que o JML
-     * tem dificuldade de prever vindo de uma String.
-     */
     /*@ 
       @ public behavior
       @   assignable \nothing;
       @
-      @   // Regra 1: Campos obrigatórios nulos sempre lançam exceção
       @   signals (IllegalArgumentException) cliente == null || funcionario == null;
       @   signals (IllegalArgumentException) veiculo == null;
       @
-      @   // Regra 2: Se for financiado, existem várias condições de falha.
-      @   // (entrada negativa, sem parcelas, OU entrada >= preço).
-      @   // Ao usar 'signals ... isFinanciado', dizemos ao JML: "Se for financiado, 
-      @   // aceitamos que uma IllegalArgumentException possa ocorrer".
-      @   // Isso cobre o caso "entrada >= preco" que estava causando o timeout.
       @   signals (IllegalArgumentException) isFinanciado && (entrada < 0 || parcelas == null || parcelas <= 0);
       @   
-      @   // Permite falha genérica de validação financeira (cobre o caso do preço)
       @   signals (IllegalArgumentException) isFinanciado;
       @
-      @   // Permite erro de conversão numérica
       @   signals (NumberFormatException) isFinanciado; 
       @*/
     public void validarDadosVenda(Cliente cliente, Funcionario funcionario, Veiculo veiculo, 
@@ -168,7 +137,6 @@ public class Vender_veiculoController implements Initializable {
         }
 
         if (isFinanciado) {
-            // USANDO O HELPER SEGURO (O JML confia no contrato dele e ignora o corpo)
             double precoVeiculo = converterDoubleSeguro(precoTexto);
 
             if (entrada < 0) {
@@ -183,20 +151,14 @@ public class Vender_veiculoController implements Initializable {
         }
     }
 
-    /**
-     * Persistência: Isola o acesso ao DAO.
-     */
     /*@
       @ public normal_behavior
       @   requires veiculo != null;
       @   requires funcionario != null;
-      @   // Pré-condição: Veículo não pode estar vendido
       @   requires veiculo.status != StatusVeiculo.VENDIDO; 
       @
-      @   // Pós-condição: Veículo DEVE terminar como vendido
       @   ensures veiculo.status == StatusVeiculo.VENDIDO;
       @
-      @   // Apenas o status pode ser alterado
       @   assignable veiculo.status;
       @
       @ also
@@ -206,7 +168,6 @@ public class Vender_veiculoController implements Initializable {
       @*/
       //@ skipesc
     public void persistirVenda(Veiculo veiculo, Funcionario funcionario, double comissao) throws Exception {
-        // 1. Atualizar Veículo
         veiculo.setStatus(StatusVeiculo.VENDIDO);
         VeiculoDAO veiculoDAO = new VeiculoDAO();
         boolean veiculoAtualizado = veiculoDAO.update(veiculo);
@@ -216,7 +177,6 @@ public class Vender_veiculoController implements Initializable {
             throw new Exception("Não foi possível atualizar o status do veículo no banco de dados!");
         }
 
-        // 2. Atualizar Comissão
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
         boolean comissaoAtualizada = funcionarioDAO.atualizarComissao(funcionario.getId(), comissao);
 
@@ -232,26 +192,21 @@ public class Vender_veiculoController implements Initializable {
         Stage ownerStage = (Stage) btnVender.getScene().getWindow();
 
         try {
-            // 1. Coleta de Dados
             Cliente cliente = comboBoxCliente.getValue();
             Funcionario funcionario = comboBoxFuncionario.getValue();
             
-            // Dados Financeiros
             boolean financiado = chkFinanciamento != null && chkFinanciamento.isSelected();
             double entrada = 0.0;
             Integer parcelas = 0;
             
-            // Tratamento seguro para campos financeiros (caso null no parse)
             if (financiado) {
                 String txt = txtEntrada.getText();
                 entrada = (txt == null || txt.trim().isEmpty()) ? 0.0 : Double.parseDouble(txt);
                 parcelas = comboBoxParcelas.getValue();
             }
 
-            // 2. Validação
             validarDadosVenda(cliente, funcionario, this.veiculo, financiado, entrada, parcelas);
 
-            // 3. Cálculos
             double precoVeiculo = Double.parseDouble(this.veiculo.getPreco());
             double comissao = calcularComissao(precoVeiculo);
             
@@ -263,10 +218,8 @@ public class Vender_veiculoController implements Initializable {
                 totalPago = entrada + (valorParcela * parcelas);
             }
 
-            // 4. Persistência
             persistirVenda(this.veiculo, funcionario, comissao);
 
-            // 5. Feedback Sucesso
             mostrarAlertaSucesso(ownerStage, cliente, funcionario, comissao, financiado, valorParcela, parcelas, totalPago);
             fecharModal();
 
@@ -280,9 +233,6 @@ public class Vender_veiculoController implements Initializable {
         }
     }
 
-    /**
-     * Habilita/Desabilita campos de financiamento baseado no CheckBox
-     */
     //@ skipesc
     @FXML
     private void alternarFinanciamento() {
@@ -298,8 +248,6 @@ public class Vender_veiculoController implements Initializable {
             }
         }
     }
-
-    // --- Alertas Auxiliares ---
 
     //@ skipesc
     private void mostrarAlertaErro(Stage owner, String header, String content) {
@@ -357,6 +305,9 @@ public class Vender_veiculoController implements Initializable {
         }
     }
 
+    /**
+     * Initializes the controller class.
+     */
     //@ skipesc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -381,7 +332,6 @@ public class Vender_veiculoController implements Initializable {
 
     //@ skipesc
     private void carregarDadosCombos() {
-        // --- CLIENTES ---
         ClienteDAO clienteDAO = new ClienteDAO();
         ArrayList<Cliente> clientes = clienteDAO.buscarTodos();
         ObservableList<Cliente> clientesFX = FXCollections.observableArrayList(clientes);
@@ -401,7 +351,6 @@ public class Vender_veiculoController implements Initializable {
         comboBoxCliente.setCellFactory(fabricaCelulaCliente);
         comboBoxCliente.setButtonCell(fabricaCelulaCliente.call(null));
 
-        // --- FUNCIONÁRIOS ---
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
         ArrayList<Funcionario> funcionarios = funcionarioDAO.buscarTodos();
         ObservableList<Funcionario> funcionariosFX = FXCollections.observableArrayList(funcionarios);
@@ -421,20 +370,18 @@ public class Vender_veiculoController implements Initializable {
         comboBoxFuncionario.setCellFactory(fabricaCelulaFuncionario);
         comboBoxFuncionario.setButtonCell(fabricaCelulaFuncionario.call(null));
     }
-    /**
-     * Método auxiliar para isolar a complexidade do Double.parseDouble.
-     */
+
     /*@
-      @ private normal_behavior   // <--- MUDANÇA 1: Mudamos de public para private
+      @ private normal_behavior
       @   requires valor != null;
       @   ensures \result >= -Double.MAX_VALUE && \result <= Double.MAX_VALUE;
-      @   assignable \nothing;    // <--- MUDANÇA 2: Garantimos que ele não toca na memória
+      @   assignable \nothing;
       @
       @ also
       @
-      @ private exceptional_behavior // <--- MUDANÇA 3: Mudamos de public para private
+      @ private exceptional_behavior
       @   signals (NumberFormatException) true;
-      @   assignable \nothing;    // <--- Reforçamos aqui também
+      @   assignable \nothing;
       @*/
     //@ skipesc
     private double converterDoubleSeguro(String valor) throws NumberFormatException {

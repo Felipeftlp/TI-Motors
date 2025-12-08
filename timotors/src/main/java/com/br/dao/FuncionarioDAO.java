@@ -233,7 +233,6 @@ public class FuncionarioDAO {
     /*@ 
       @ public behavior
       @   ensures \result == true || \result == false;
-      @   // Garante que não altera nada nos objetos passados por parâmetro
       @   assignable \nothing;
       @*/
     //@ skipesc

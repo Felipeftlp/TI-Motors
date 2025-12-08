@@ -34,7 +34,6 @@ public class VeiculoDAO {
     public ArrayList<Veiculo> buscarTodos() {
         String sql = "SELECT * FROM veiculo";
 
-        // Responsável em guardar o resultado
         ResultSet resultado;
 
         ArrayList<Veiculo> lista = new ArrayList<>();
@@ -156,9 +155,7 @@ public class VeiculoDAO {
                     + " (?, ?, ?, ?, ?, ?, ?)";
 
             Connection conn = FabricaConexao.getConnection();
-            //revisor DE  SQL
             PreparedStatement ps = conn.prepareStatement(comando);
-            // substituindo as ?
             ps.setString(1, objeto.getMarca());
             ps.setString(2, objeto.getModelo());
             ps.setString(3, objeto.getAno());
@@ -189,7 +186,6 @@ public class VeiculoDAO {
       @ public behavior
       @   ensures \result == true || \result == false;
       @   ensures veiculo.status == \old(veiculo.status);
-      @   // Como estamos pulando o corpo (skipesc), garantimos que o Java não muda.
       @   assignable \nothing; 
       @*/
     //@ skipesc

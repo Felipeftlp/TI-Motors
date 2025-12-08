@@ -154,7 +154,6 @@ public class Veiculo {
         this.status = status;
     }
 
-    // Método toString
     //@ skipesc
     @Override
     public String toString() {

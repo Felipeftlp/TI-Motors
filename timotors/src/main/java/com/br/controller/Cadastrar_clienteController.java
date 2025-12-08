@@ -74,7 +74,6 @@ public class Cadastrar_clienteController implements Initializable {
                && !email.equals("") && !endereco.equals("") && interesse != null;
     }
     
-    //assumimos que a construção do objeto é segura porque o Modelo já foi verificado
     /*@
       @ requires nome != null && cpf != null && telefone != null && email != null && endereco != null && interesse != null;
       @ ensures \result != null;

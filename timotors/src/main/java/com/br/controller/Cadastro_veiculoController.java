@@ -75,7 +75,6 @@ public class Cadastro_veiculoController implements Initializable {
                && !cor.equals("") && !preco.equals("") && estado != null;
     }
     
-    //assumimos que a construção do objeto é segura porque o Modelo já foi verificado
     /*@
       @ requires marca != null && modelo != null && ano != null && cor != null && estado != null && preco != null;
       @ ensures \result != null;
